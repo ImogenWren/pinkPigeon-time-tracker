@@ -1,6 +1,6 @@
 # time-tracker/ pinkPigeon Productivity Tracker
-\033[35m
 ```
+\033[35m
                          -
     \                  /   @ )
       \             _/_   |~ \)

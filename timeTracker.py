@@ -22,7 +22,7 @@ bggry =  prettyCLI.pcli["bg"]["dark-grey"]
 
 # Global Const
 
-database_filename =
+
 
 #Global Vars
 currentClient = ""
@@ -127,7 +127,7 @@ class timeTracker:
                 self.datastore[self.user][currentClient][currentProject][currentTask] = {"first-log": currentTaskStart}
                 self.datastore[self.user][currentClient][currentProject][currentTask] = {"last-log": currentTaskStart}
 
-        self.save_dict_to_json(dataStore)
+        self.save_dict_to_json(self.datastore)
         print(f"""\nStarting New Job:
             {pnk}{client}.{blu}{project}.{ylw}{task}{dft} at {grn}{currentTaskStart}{dft}\n""")
 
@@ -154,16 +154,16 @@ class timeTracker:
 
     # Function to save dictionary as a JSON file
     def save_dict_to_json(self, dictionary):
-        with open(database_filename, 'w') as file:
+        with open(self.db_file, 'w') as file:
             json.dump(dictionary, file, indent=4)
 
-    def load_json_file(self, filename=database_filename):
+    def load_json_file(self):
         try:
-            with open(filename, 'r') as file:
+            with open(self.db_file, 'r') as file:
                 data = json.load(file)  # Load JSON data into a Python dictionary
             return data
         except FileNotFoundError:
-            print(f"Error: The file '{filename}' was not found.")
+            print(f"Error: The file '{self.db_file}' was not found.")
             return 0
         except json.JSONDecodeError:
             print("Error: Failed to decode JSON from the file.")

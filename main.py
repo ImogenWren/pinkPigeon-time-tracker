@@ -86,23 +86,25 @@ Recall Commands:
     } # end of client
 } # end of data-store
 
-
-
-
-
-
-
-
 '''
+import timeTracker
 
+pp = timeTracker
 
-def print_hi(name):
-    print(name)
+def main():
+    pp.state_init()
+    loopactive = 1
+    while loopactive:
+        loopactive = pp.state_wait()
+    print("Software Exiting, Goodbye")
+
 
 
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    main()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+
+

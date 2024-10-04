@@ -93,10 +93,9 @@ pp = timeTracker.timeTracker()
 
 def main():
     pp.state_init()
-    loopactive = 1
-    while loopactive:
-        loopactive = pp.state_wait()
+    pp.state_machine()
     print("Software Exiting, Goodbye")
+
 
 
 

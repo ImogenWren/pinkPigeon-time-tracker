@@ -35,7 +35,8 @@ template_dataStore = {
             "start" : "09:00",
             "end"   : "17:00",
             "lunch_start" : "12:30",
-            "lunch_end"   : "13:30"
+            "lunch_end"   : "13:30",
+            "job_open": False
         }
 }
 class timeTracker:
@@ -50,7 +51,14 @@ class timeTracker:
         self.datastore = template_dataStore
 
     def state_machine(self):
-        
+        currentState = 1
+        while currentState:
+            currentState = self.state_wait()
+            if currentState == 2:
+                currentState = self.state_job_active()
+
+
+
 
     def state_wait(self): # Default State waits for user input (may later thread the user input to allow timing to continue to happen alongside)
         user_input = input(f"Enter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job\n\n").lower()
@@ -69,12 +77,22 @@ class timeTracker:
         else:
             try:
                 self.state_new_job(values[0], values[1], values[2])
-                return 1
+                return 2
             except:
                 print("Exception in state_new_job, ignoring previous input")
 
     def state_job_active(self):
-        print(" ")
+        while self.datastore[self.user]["job_open"] == True:
+            user_input = input(f"Job Active, to end job type ""end"" \n\n")
+            if user_input.lower() == "end":
+                #TODO close job
+                print("closing job")
+                self.datastore[self.user]["job_open"] = False
+                return 1
+        return 2
+
+
+
 
     def state_init(self):
         print(art.pigeonArt)
@@ -143,9 +161,11 @@ class timeTracker:
                     self.datastore[self.user][client][project][task]["first_log"] = self.task_start
                 else:
                     return 0
-            self.datastore[self.user][client][project][task]["last_log"]=  self.task_start
+            self.datastore[self.user][client][project][task]["last_log"] =  self.task_start
+        # Change job open variable
+        self.datastore[self.user]["job_open"] = True
         self.save_dict_to_json(self.datastore)
-        print(f"""\nStarting New Job:
+        print(f"""\nStarting Job:
             {pnk}{client}.{blu}{project}.{ylw}{task}{dft} at {grn}{self.task_start}{dft}\n""")
         return 1   #return 1 on success
 

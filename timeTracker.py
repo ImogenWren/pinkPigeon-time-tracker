@@ -25,13 +25,6 @@ bggry =  prettyCLI.pcli["bg"]["dark-grey"]
 
 
 #Global Vars
-currentClient = ""
-currentProject = ""
-currentTask = ""
-currentTaskStart = ""
-
-currentUser = "0"
-currentUserName = ""
 
 
 template_dataStore = {
@@ -56,8 +49,10 @@ class timeTracker:
         self.username = ""
         self.datastore = template_dataStore
 
-# Default State waits for user input (may later thread the user input to allow timing to continue to happen alongside)
-    def state_wait(self):
+    def state_machine(self):
+        
+
+    def state_wait(self): # Default State waits for user input (may later thread the user input to allow timing to continue to happen alongside)
         user_input = input(f"Enter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job\n\n").lower()
         values = re.split(r'[;,. ] ?', user_input)
         # for val in values:
@@ -72,8 +67,14 @@ class timeTracker:
             # TODO end job script
             return 1
         else:
-            self.state_new_job(values[0], values[1], values[2])
-            return 1
+            try:
+                self.state_new_job(values[0], values[1], values[2])
+                return 1
+            except:
+                print("Exception in state_new_job, ignoring previous input")
+
+    def state_job_active(self):
+        print(" ")
 
     def state_init(self):
         print(art.pigeonArt)
@@ -81,7 +82,7 @@ class timeTracker:
         self.state_load_user()
 
     def state_load_user(self):
-        db_data = self.load_json_file(self.db_file)
+        db_data = self.load_json_file()
         if (db_data == 0):
             print("Database not found, using default user")
             self.user = self.datastore.get("last_user")
@@ -89,47 +90,64 @@ class timeTracker:
             print(json.dumps(self.datastore, indent=4))
         else:
             self.user = db_data.get("last_user")
-            self.username = db_data[currentUser].get("name", "Unknown User")
+            self.username = db_data[self.user].get("name", "Unknown User")
             self.datastore = db_data         # put the loaded data from file into the datastore
             print(json.dumps(db_data, indent=4))
-        print(f"Welcome {currentUserName}\n")
+        print(f"Welcome {self.username}\n")
 
     def state_new_job(self, client, project, task):
         # TODO END PREVIOUS JOB
+        # TODO SAVE DATA TO JSON FILE
         self.client = client
         self.project = project
         self.task = task
         self.task_start = self.get_datetime()
         db_data = self.load_json_file()
-        if (db_data == 0):
-            print("no data found, creating log")
+        if (db_data == 0):                                 # No valid file found -> create file
+            print("no data found, exiting")               # There should at the very least be a valid JSON file, create the file on opening program
+            return 0
             # TODO CREATE FILE?
-        else:
-            if client in db_data[self.user]:
+        else:                                                       # File found -> look for existing jobs
+            # Update LOCAL datastore with new JSON data
+            self.datastore = db_data
+            ## Check for existing client in database
+            if client in self.datastore[self.user]:
                 print(f"{client} found in {self.username}")
             else:
-                print(f"{client} not found in {self.username}, Creating Client")
-                self.datastore[self.user].setdefault(client, {})
-                self.datastore[self.user][client] = {"first-log": currentTaskStart}
-                self.datastore[self.user][client] = {"last-log": currentTaskStart}
+                print(f"{client} not found in {self.username}, Create Client?")
+                if (self.user_yes_no()):
+                    self.datastore[self.user].setdefault(client, {})
+                    self.datastore[self.user][client]["first_log"] =  self.task_start
+                else:
+                    return 0
+            self.datastore[self.user][client]["last_log"] =  self.task_start          # the last log should be entered always as this is where the calculation is done
 
-            if project in db_data[self.user][client]:
-                print(f"{currentProject} found in {client}")
+            if project in self.datastore[self.user][client]:
+                print(f"{project} found in {client}")
             else:
-                print(f"{currentProject} not found for {client}, Creating Project")
-                self.datastore[self.user][client][currentProject] = {"first-log": currentTaskStart}
-                self.datastore[self.user][client][currentProject] = {"last-log": currentTaskStart}
+                print(f"{project} not found for {client}, Create Project?")
+                if (self.user_yes_no()):
+                    self.datastore[self.user][client].setdefault(project, {})
+                    self.datastore[self.user][client][project]["first_log"] = self.task_start
+                else:
+                    return 0
+            self.datastore[self.user][client][project]["last_log"] = self.task_start
 
-            if currentTask in db_data[self.user][client][currentProject]:
-                print(f"{currentTask} found in {currentProject}")
+            if task in self.datastore[self.user][client][project]:
+                print(f"{task} found in {project}")
             else:
-                print(f"{currentTask} not found for {currentProject}, Creating Task")
-                self.datastore[self.user][currentClient][currentProject][currentTask] = {"first-log": currentTaskStart}
-                self.datastore[self.user][currentClient][currentProject][currentTask] = {"last-log": currentTaskStart}
-
+                print(f"{task} not found for {project}, Creating Task")
+                if (self.user_yes_no()):
+                    self.datastore[self.user][client][project].setdefault(task, {})
+                    print("CREATING TASK first log")
+                    self.datastore[self.user][client][project][task]["first_log"] = self.task_start
+                else:
+                    return 0
+            self.datastore[self.user][client][project][task]["last_log"]=  self.task_start
         self.save_dict_to_json(self.datastore)
         print(f"""\nStarting New Job:
-            {pnk}{client}.{blu}{project}.{ylw}{task}{dft} at {grn}{currentTaskStart}{dft}\n""")
+            {pnk}{client}.{blu}{project}.{ylw}{task}{dft} at {grn}{self.task_start}{dft}\n""")
+        return 1   #return 1 on success
 
     def state_end_job(self):
         print("Ending Current Job")
@@ -170,4 +188,12 @@ class timeTracker:
             return 0
         except:
             print("Error, using default values")
+            return 0
+
+    def user_yes_no(self):
+        user_input = input("y/n  (No will cancel create job)\n\n")
+        if user_input.lower() == "y":
+            return 1
+        else:
+            print("Creating Job Cancelled")
             return 0

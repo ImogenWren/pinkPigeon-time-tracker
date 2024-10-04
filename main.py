@@ -89,7 +89,7 @@ Recall Commands:
 '''
 import timeTracker
 
-pp = timeTracker
+pp = timeTracker.timeTracker()
 
 def main():
     pp.state_init()

@@ -6,7 +6,7 @@
         "end": "17:00",
         "lunch_start": "12:30",
         "lunch_end": "13:30",
-        "job_open": true,
+        "job_open": false,
         "last_job": "myself.d&d.angstrom",
         "remotelabs": {
             "hours_total": 3.1,
@@ -29,17 +29,17 @@
             }
         },
         "myself": {
-            "hours_total": 0.0,
+            "hours_total": 1.7333333333333334,
             "first_log": "2024-10-07 20:09",
-            "last_log": "2024-10-07 20:10",
+            "last_log": "2024-10-07 21:54",
             "d&d": {
-                "hours_total": 0.0,
+                "hours_total": 1.7333333333333334,
                 "first_log": "2024-10-07 20:09",
-                "last_log": "2024-10-07 20:10",
+                "last_log": "2024-10-07 21:54",
                 "angstrom": {
-                    "hours_total": 0.0,
+                    "hours_total": 1.7333333333333334,
                     "first_log": "2024-10-07 20:09",
-                    "last_log": "2024-10-07 20:10"
+                    "last_log": "2024-10-07 21:54"
                 }
             }
         }

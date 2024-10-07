@@ -7,19 +7,34 @@ import re
 import prettyCLI
 import asciiArt as art
 from datetime import datetime
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 
 dft = prettyCLI.pcli["df"]                # default all
 
-pnk = prettyCLI.pcli["fg"]["pink"]
-wht = prettyCLI.pcli["fg"]["white"]
-blu = prettyCLI.pcli["fg"]["cyan"]
-ylw = prettyCLI.pcli["fg"]["yellow"]
-blk = prettyCLI.pcli["fg"]["black"]
-grn = prettyCLI.pcli["fg"]["deep-green"]
-mgn = prettyCLI.pcli["fg"]["magenta"]
+#pnk = prettyCLI.pcli["fg"]["pink"]
+pnk = Fore.LIGHTMAGENTA_EX
+wht = Fore.WHITE
+dft = Fore.WHITE
+blu = Fore.LIGHTCYAN_EX
+ylw = Fore.LIGHTYELLOW_EX
+blk = Fore.BLACK
+mgn = Fore.LIGHTMAGENTA_EX
+grn = Fore.GREEN
+#wht = prettyCLI.pcli["fg"]["white"]
+#blu = prettyCLI.pcli["fg"]["cyan"]
+#ylw = prettyCLI.pcli["fg"]["yellow"]
+#blk = prettyCLI.pcli["fg"]["black"]
+#grn = prettyCLI.pcli["fg"]["deep-green"]
+#mgn = prettyCLI.pcli["fg"]["magenta"]
+
 
 bgbwht =  prettyCLI.pcli["bg"]["white"]
-bggry =  prettyCLI.pcli["bg"]["dark-grey"]
+#bggry =  prettyCLI.pcli["bg"]["dark-grey"]
+
+bggry = Back.LIGHTBLACK_EX
+
 
 # Global Const
 
@@ -48,9 +63,7 @@ class timeTracker:
 
     def state_machine(self):
         self.state_init()
-        print("loop 0")
         self.current_state = self.state_load_user()
-        print("loop 2")
         while self.current_state >= 1:
             if self.current_state == 1:
                 self.current_state = self.state_wait()
@@ -142,7 +155,6 @@ class timeTracker:
             print(f"Open job {current_job} found")
             user_input = input("Continue job? y/n\n\n")
             if user_input.lower() == "y":
-                print("Loop 1")
                 return 2
             else:
                 self.state_end_job()

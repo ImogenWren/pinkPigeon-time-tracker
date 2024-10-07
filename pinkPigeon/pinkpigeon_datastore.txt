@@ -1,0 +1,32 @@
+{
+    "last_user": "0",
+    "0": {
+        "name": "Imogen Heard",
+        "start": "09:00",
+        "end": "17:00",
+        "lunch_start": "12:30",
+        "lunch_end": "13:30",
+        "job_open": true,
+        "last_job": "remotelabs.stc.acceptance-testing",
+        "remotelabs": {
+            "hours_total": 0.8666666666666667,
+            "first_log": "2024-10-07 11:05",
+            "last_log": "2024-10-07 14:39",
+            "stc": {
+                "hours_total": 0.8666666666666667,
+                "first_log": "2024-10-07 11:05",
+                "last_log": "2024-10-07 14:39",
+                "fw-dev": {
+                    "hours_total": 0.06666666666666667,
+                    "first_log": "2024-10-07 11:05",
+                    "last_log": "2024-10-07 11:09"
+                },
+                "acceptance-testing": {
+                    "hours_total": 0.8,
+                    "first_log": "2024-10-07 13:44",
+                    "last_log": "2024-10-07 14:39"
+                }
+            }
+        }
+    }
+}

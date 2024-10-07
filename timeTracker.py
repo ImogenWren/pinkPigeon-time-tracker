@@ -36,6 +36,12 @@ bgbwht =  prettyCLI.pcli["bg"]["white"]
 bggry = Back.LIGHTBLACK_EX
 
 
+# STATE VARIABLES
+EXIT = 0
+WAIT = 1
+JOB_ACTIVE = 2
+NEW_JOB = 3 # TODO NOIPM
+REPORT = 4
 # Global Const
 
 
@@ -61,6 +67,7 @@ class timeTracker:
         self.datastore = template_dataStore
         self.current_state = 1
 
+# each state contains a return to select next active state
     def state_machine(self):
         self.state_init()
         self.current_state = self.state_load_user()
@@ -72,7 +79,6 @@ class timeTracker:
             else:
                 print("state machine exception, resetting (for now)")
                 self.current_state = 1
-
 
 
 
@@ -91,7 +97,15 @@ class timeTracker:
             print("Ending Current Job")
             # TODO end job script
             return 3
-        
+        elif (values[0] == "report"):
+            if (values[1] == "client"):
+                print("client report")
+            elif (values[1] == "project"):
+                print("project report")
+            elif (values[1] == "task"):
+                print("task report")
+            else:
+                print("User Report")
         else:
             try:
                 self.state_new_job(values[0], values[1], values[2])
@@ -187,7 +201,7 @@ class timeTracker:
             else:
                 print(f"{client} not found in {self.username}, Create Client?")
                 if (self.user_yes_no()):
-                    self.datastore[self.user].setdefault(client, {"hours_total":0,"hours_since":0})
+                    self.datastore[self.user].setdefault(client, {"hours_total":0,"hours_since":0, "last_report": ""})
 
                     #self.datastore[self.user][client][.setdefault("hours_total", 0)
                     self.datastore[self.user][client]["first_log"] =  self.task_start
@@ -200,7 +214,7 @@ class timeTracker:
             else:
                 print(f"{project} not found for {client}, Create Project?")
                 if (self.user_yes_no()):
-                    self.datastore[self.user][client].setdefault(project, {"hours_total":0,"hours_since":0})
+                    self.datastore[self.user][client].setdefault(project, {"hours_total":0,"hours_since":0, "last_report": ""})
                     #self.datastore[self.user][client][project].setdefault("hours_total", 0)
                     self.datastore[self.user][client][project]["first_log"] = self.task_start
                 else:
@@ -212,7 +226,7 @@ class timeTracker:
             else:
                 print(f"{task} not found for {project}, Creating Task")
                 if (self.user_yes_no()):
-                    self.datastore[self.user][client][project].setdefault(task, {"hours_total":0,"hours_since":0})
+                    self.datastore[self.user][client][project].setdefault(task, {"hours_total":0,"hours_since":0, "last_report": ""})
                     #self.datastore[self.user][client][project][task].setdefault("hours_total", 0)
                     print("CREATING TASK first log")
                     self.datastore[self.user][client][project][task]["first_log"] = self.task_start
@@ -283,13 +297,17 @@ class timeTracker:
         print("user.stats                     -> Get stats for current user")
 
     def report_task(self, client, project, task):
-        print("Generating Report for {client}.{project}.{task}")
+        print(f"Generating Report for {client}.{project}.{task}")
 
     def report_project(self, client, project):
-        print("Generating Report for {client}.{project}")
+        print(f"Generating Report for {client}.{project}")
+        db_data = self.load_json_file()
+        self.job_end = self.get_datetime()
+
+
 
     def report_client(self, client):
-        print("Generating Report for {client}")
+        print(f"Generating Report for {client}")
 
     # Utility Functions
 

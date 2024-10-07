@@ -91,6 +91,7 @@ class timeTracker:
             print("Ending Current Job")
             # TODO end job script
             return 3
+        
         else:
             try:
                 self.state_new_job(values[0], values[1], values[2])
@@ -186,7 +187,8 @@ class timeTracker:
             else:
                 print(f"{client} not found in {self.username}, Create Client?")
                 if (self.user_yes_no()):
-                    self.datastore[self.user].setdefault(client, {"hours_total":0})
+                    self.datastore[self.user].setdefault(client, {"hours_total":0,"hours_since":0})
+
                     #self.datastore[self.user][client][.setdefault("hours_total", 0)
                     self.datastore[self.user][client]["first_log"] =  self.task_start
                 else:
@@ -198,7 +200,7 @@ class timeTracker:
             else:
                 print(f"{project} not found for {client}, Create Project?")
                 if (self.user_yes_no()):
-                    self.datastore[self.user][client].setdefault(project, {"hours_total":0})
+                    self.datastore[self.user][client].setdefault(project, {"hours_total":0,"hours_since":0})
                     #self.datastore[self.user][client][project].setdefault("hours_total", 0)
                     self.datastore[self.user][client][project]["first_log"] = self.task_start
                 else:
@@ -210,7 +212,7 @@ class timeTracker:
             else:
                 print(f"{task} not found for {project}, Creating Task")
                 if (self.user_yes_no()):
-                    self.datastore[self.user][client][project].setdefault(task, {"hours_total":0})
+                    self.datastore[self.user][client][project].setdefault(task, {"hours_total":0,"hours_since":0})
                     #self.datastore[self.user][client][project][task].setdefault("hours_total", 0)
                     print("CREATING TASK first log")
                     self.datastore[self.user][client][project][task]["first_log"] = self.task_start
@@ -262,7 +264,8 @@ class timeTracker:
             self.datastore[self.user]["job_open"] = False
             self.save_dict_to_json(self.datastore)
             print(f"""\nClosed Job: {pnk}{self.client}.{blu}{self.project}.{ylw}{self.task}{dft} at {grn}{self.job_end}{dft}\n""")
-            print(f"You Worked: {mgn}{task_hours}{dft} hours on your current job")
+            print(f"You Worked: {mgn}{task_new_hours}{dft} hours in your last session")
+            print(f"You Worked: {mgn}{task_hours}{dft} hours total for your current job")
             return 1
         return 1
 
@@ -278,6 +281,15 @@ class timeTracker:
         print("user.update.lunchstart.{time_in24h} -> Change user lunch time")
         print("user.update.lunchend.{time_in24h} -> Change user lunch time")
         print("user.stats                     -> Get stats for current user")
+
+    def report_task(self, client, project, task):
+        print("Generating Report for {client}.{project}.{task}")
+
+    def report_project(self, client, project):
+        print("Generating Report for {client}.{project}")
+
+    def report_client(self, client):
+        print("Generating Report for {client}")
 
     # Utility Functions
 

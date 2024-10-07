@@ -92,7 +92,6 @@ import timeTracker
 pp = timeTracker.timeTracker()
 
 def main():
-    pp.state_init()
     pp.state_machine()
     print("Software Exiting, Goodbye")
 

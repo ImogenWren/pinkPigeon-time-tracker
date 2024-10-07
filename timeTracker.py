@@ -44,19 +44,21 @@ class timeTracker:
         self.user = "0"
         self.username = ""
         self.datastore = template_dataStore
+        self.current_state = 1
 
     def state_machine(self):
-        currentState = 1
         self.state_init()
-        self.state_load_user()
-        while currentState > 0:
-            if currentState == 1:
-                currentState = self.state_wait()
-            elif currentState == 2:
-                currentState = self.state_job_active()
+        print("loop 0")
+        self.current_state = self.state_load_user()
+        print("loop 2")
+        while self.current_state >= 1:
+            if self.current_state == 1:
+                self.current_state = self.state_wait()
+            elif self.current_state == 2:
+                self.current_state = self.state_job_active()
             else:
                 print("state machine exception, resetting (for now)")
-                currentState = 1
+                self.current_state = 1
 
 
 
@@ -87,15 +89,31 @@ class timeTracker:
 
 
     def state_job_active(self):
-        while self.datastore[self.user]["job_open"] == True:
-            user_input = input(f"Job Active, to end job type ""end"" \n\n")
-            if user_input.lower() == "end":
-                #TODO close job
-                print("closing job")
-                self.state_end_job()
-                #self.datastore[self.user]["job_open"] = False
-                return 1
-        return 2
+        if self.datastore[self.user]["job_open"] == True:
+            try:
+                user_input = input(f"Job Active, to end job type {pnk}""end"f" {dft} \n\n")
+                if user_input.lower() == "end":
+                    #TODO close job
+                    print("closing job")
+                    self.state_end_job()
+                    #self.datastore[self.user]["job_open"] = False
+                    return 1
+                elif user_input.lower() == "exit":
+                    user_input = input(f"End current job before exit? y/n \n\n")
+                    if user_input.lower() == "y":
+                        print("closing job")
+                        self.state_end_job()
+                        return 0
+                    else:
+                        return 0
+            except KeyboardInterrupt:
+                user_input = input(f"End current job before exit? y/n \n\n")
+                if user_input.lower() == "y":
+                    print("closing job")
+                    self.state_end_job()
+                    return 0
+                else:
+                    return 0
 
 
 
@@ -103,7 +121,7 @@ class timeTracker:
     def state_init(self):
         print(art.pigeonArt)
         print(f"{pnk}{bggry}  pinkPigeon Productivity Tracker  {dft}\n")
-        self.state_load_user()
+
 
     def state_load_user(self):
         db_data = self.load_json_file()
@@ -111,19 +129,26 @@ class timeTracker:
             print("Database not found, using default user")
             self.user = self.datastore.get("last_user")
             self.username = self.datastore[self.user].get("name", "Unknown User")
-            print(json.dumps(self.datastore, indent=4))
+            #print(json.dumps(self.datastore, indent=4))
             return 1
         else:
             self.user = db_data.get("last_user")
             self.username = db_data[self.user].get("name", "Unknown User")
             self.datastore = db_data         # put the loaded data from file into the datastore
-            print(json.dumps(db_data, indent=4))
+            #print(json.dumps(db_data, indent=4))
         print(f"Welcome {self.username}\n")
         if self.datastore[self.user]["job_open"] == True:
             current_job = self.datastore[self.user]["last_job"]
             print(f"Open job {current_job} found")
-            user_input = input("Continue job? y/n")
+            user_input = input("Continue job? y/n\n\n")
             if user_input.lower() == "y":
+                print("Loop 1")
+                return 2
+            else:
+                self.state_end_job()
+                return 1
+        else:
+            return 1
 
 
 

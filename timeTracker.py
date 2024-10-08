@@ -85,6 +85,8 @@ class timeTracker:
                 self.current_state = self.state_list_cmds()
             elif self.current_state[0] == STATE_ADD_HOURS:
                 self.current_state = self.state_add_hours_task(self.current_state[1])
+            elif self.current_state[0] == STATE_REPORT:
+                self.current_state = self.state_report_project(self.current_state[1])
             else:
                 print("state machine exception, resetting (for now)")
                 self.current_state = [STATE_WAIT, ""]
@@ -104,21 +106,15 @@ class timeTracker:
             return [STATE_EXIT,""]
         elif (values[0] == "help"):
             return [STATE_HELP , ""]
-        elif ((values[0] == "job" and values[1] == "end") or (values[0] == "end" and values[1] == "job" )):
+        elif ((values[0] == "job" and values[1] == "end") or (values[0] == "end" )):
             print("Ending Current Job")
             return [STATE_CLOSE_JOB, ""]
         elif (values[0] == "add"):
             print("adding hours")
             return [STATE_ADD_HOURS, values]
         elif (values[0] == "report"):
-            if (values[1] == "client"):
-                print("client report")
-            elif (values[1] == "project"):
-                print("project report")
-            elif (values[1] == "task"):
-                print("task report")
-            else:
-                print("User Report")
+            print("generating report")
+            return [STATE_REPORT, values]
         else:
             try:
                 #self.state_new_job(values[0], values[1], values[2])
@@ -137,7 +133,7 @@ class timeTracker:
                 if user_input.lower() == "end":
                     #TODO close job
                     print("closing job")
-                    self.state_end_job()
+                    self.state_end_job() #TODO this does not obey state machine layout
                     #self.datastore[self.user]["job_open"] = False
                     return [STATE_WAIT, ""]
                 elif user_input.lower() == "exit":
@@ -331,9 +327,9 @@ class timeTracker:
         print("\nVerified Commands")
         print("{client}.{project}.{task}            -> Start Job (also ends open job)")
         print("end                                  -> End Current Job (while active)")
-        print("add.client.project.task.hours        -> Add number of hours to task\n")
+        print("add.client.project.task.hours        -> Add number of hours to task")
         print("exit                                 -> Exit program")
-        print("report.{project}                     -> Generate Report for {project}")
+        print("report.{client}.{project}            -> Generate Report for {client}.{project}")
         print("\nUnverified commands")
         print("job.stats                            -> Get Stats for Current Job")
         print("list.clients                         -> List all clients")
@@ -353,7 +349,7 @@ class timeTracker:
         print(f"Generating Report for {client}.{project}.{task}")
         return (STATE_WAIT, "")
 
-    def report_project(self, clientproject):
+    def state_report_project(self, clientproject):
         client = clientproject[1]
         project = clientproject[2]
         print(f"Generating Report for {client}.{project}")
@@ -363,7 +359,20 @@ class timeTracker:
         project_hours_since = db_data[self.user][client][project]["hours_since"]
         last_report = db_data[self.user][client][project]["last_report"]
         db_data[self.user][client][project]["hours_since"] = 0
-        print(f"You Worked: {grn}{project_hours_since}{dft} the last report date: {ylw}{last_report}{dft}")
+        db_data[self.user][client][project]["last_report"] = self.last_report_time
+        print(f"You Worked: {grn}{project_hours_since}{dft} since the last report date: {ylw}{last_report}{dft}")
+        print(f"A Total of: {pnk}{project_hours_total}{dft} on this project to date {self.last_report_time}")
+        print(f"\n\nThis breaks down to the following tasks as:")
+        tasks = {key: value for key, value in db_data[self.user][client][project].items() if isinstance(value, dict)}
+        for task in tasks:
+            print(task)
+            task_hours_total = db_data[self.user][client][project][task]["hours_total"]
+            task_hours_since = db_data[self.user][client][project][task]["hours_since"]
+            task_last_rpt = db_data[self.user][client][project][task]["last_report"]
+            print(f"You worked: {grn}{task_hours_since}{dft} since the last report date: {ylw}{task_last_rpt}")
+            print(f"A Total of: {pnk}{task_hours_total}{dft} on this task to date {self.last_report_time} ")
+            db_data[self.user][client][project][task]["hours_since"] = 0
+            db_data[self.user][client][project][task]["last_report"] = self.last_report_time
 
 
         return (STATE_WAIT, "")

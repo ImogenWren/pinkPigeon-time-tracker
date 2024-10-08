@@ -6,20 +6,20 @@
         "end": "17:00",
         "lunch_start": "12:30",
         "lunch_end": "13:30",
-        "job_open": true,
-        "last_job": "client.project.job",
+        "job_open": false,
+        "last_job": "remotelabs.stc.fw-dev",
         "client": {
-            "hours_total": 0.016666666666666666,
+            "hours_total": 21.03333333333333,
             "hours_since": 0,
             "last_report": "",
             "first_log": "2024-10-07 17:22",
-            "last_log": "2024-10-07 17:24",
+            "last_log": "2024-10-08 14:25",
             "project": {
-                "hours_total": 0.016666666666666666,
+                "hours_total": 21.03333333333333,
                 "hours_since": 0,
                 "last_report": "",
                 "first_log": "2024-10-07 17:22",
-                "last_log": "2024-10-07 17:24",
+                "last_log": "2024-10-08 14:25",
                 "task": {
                     "hours_total": 0.016666666666666666,
                     "hours_since": 0,
@@ -28,11 +28,32 @@
                     "last_log": "2024-10-07 17:24"
                 },
                 "job": {
-                    "hours_total": 0,
+                    "hours_total": 21.016666666666666,
                     "hours_since": 0,
                     "last_report": "",
                     "first_log": "2024-10-07 17:24",
-                    "last_log": "2024-10-07 17:24"
+                    "last_log": "2024-10-08 14:25"
+                }
+            }
+        },
+        "remotelabs": {
+            "hours_total": 0.033333333333333215,
+            "hours_since": 0,
+            "last_report": "",
+            "first_log": "2024-10-08 16:16",
+            "last_log": "2024-10-08 16:39",
+            "stc": {
+                "hours_total": 0.033333333333333215,
+                "hours_since": 0,
+                "last_report": "",
+                "first_log": "2024-10-08 16:16",
+                "last_log": "2024-10-08 16:39",
+                "fw-dev": {
+                    "hours_total": 3.033333333333333,
+                    "hours_since": 0,
+                    "last_report": "",
+                    "first_log": "2024-10-08 16:16",
+                    "last_log": "2024-10-08 16:39"
                 }
             }
         }

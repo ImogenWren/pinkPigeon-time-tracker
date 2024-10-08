@@ -7,19 +7,19 @@
         "lunch_start": "12:30",
         "lunch_end": "13:30",
         "job_open": false,
-        "last_job": "myself.d&d.angstrom",
+        "last_job": "remotelabs.stc.fw-dev",
         "remotelabs": {
-            "hours_total": 3.1,
+            "hours_total": 5.183333333333334,
             "first_log": "2024-10-07 11:05",
-            "last_log": "2024-10-07 16:53",
+            "last_log": "2024-10-08 12:01",
             "stc": {
-                "hours_total": 3.1,
+                "hours_total": 5.183333333333334,
                 "first_log": "2024-10-07 11:05",
-                "last_log": "2024-10-07 16:53",
+                "last_log": "2024-10-08 12:01",
                 "fw-dev": {
-                    "hours_total": 0.26666666666666666,
+                    "hours_total": 2.35,
                     "first_log": "2024-10-07 11:05",
-                    "last_log": "2024-10-07 16:53"
+                    "last_log": "2024-10-08 12:01"
                 },
                 "acceptance-testing": {
                     "hours_total": 2.833333333333333,

@@ -7,7 +7,7 @@
         "lunch_start": "12:30",
         "lunch_end": "13:30",
         "job_open": false,
-        "last_job": "remotelabs.stc.ui",
+        "last_job": "imogen.pinkpigeon.sw-dev",
         "client": {
             "hours_total": 21.03333333333333,
             "hours_since": 0,
@@ -89,6 +89,27 @@
                     "last_report": "",
                     "first_log": "2024-10-08 17:17",
                     "last_log": "2024-10-08 17:17"
+                }
+            }
+        },
+        "imogen": {
+            "hours_total": 0.21666666666666667,
+            "hours_since": 0,
+            "last_report": "",
+            "first_log": "2024-10-10 13:51",
+            "last_log": "2024-10-10 14:21",
+            "pinkpigeon": {
+                "hours_total": 0.21666666666666667,
+                "hours_since": 0,
+                "last_report": "",
+                "first_log": "2024-10-10 13:51",
+                "last_log": "2024-10-10 14:21",
+                "sw-dev": {
+                    "hours_total": 0.21666666666666667,
+                    "hours_since": 0,
+                    "last_report": "",
+                    "first_log": "2024-10-10 13:51",
+                    "last_log": "2024-10-10 14:21"
                 }
             }
         }

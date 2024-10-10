@@ -81,6 +81,8 @@ class timeTracker:
                 self.current_state = self.state_new_job(self.current_state[1])
             elif self.current_state[0] == STATE_JOB_ACTIVE:
                 self.current_state = self.state_job_active()
+            elif self.current_state[0] == STATE_CLOSE_JOB:
+                self.current_state = self.state_end_job()
             elif self.current_state[0] == STATE_HELP:
                 self.current_state = self.state_list_cmds()
             elif self.current_state[0] == STATE_ADD_HOURS:
@@ -95,7 +97,7 @@ class timeTracker:
 
 
     def state_wait(self): # Default State waits for user input (may later thread the user input to allow timing to continue to happen alongside)
-        user_input = input(f"\nEnter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job, \nor enter ""help"" to list other commands \n\n").lower()
+        user_input = input(f"\nEnter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job, \nor enter {grn} ""help"f" {dft} to list other commands \n\n").lower()
         values = re.split(r'[;,. ] ?', user_input)
         # for val in values:
         #    print(val.lower())
@@ -129,21 +131,27 @@ class timeTracker:
     def state_job_active(self):
         if self.datastore[self.user]["job_open"] == True:
             try:
-                user_input = input(f"Job Active, to end job type {pnk}""end"f" {dft} \n\n")
-                if user_input.lower() == "end":
-                    #TODO close job
-                    print("closing job")
-                    self.state_end_job() #TODO this does not obey state machine layout
-                    #self.datastore[self.user]["job_open"] = False
-                    return [STATE_WAIT, ""]
-                elif user_input.lower() == "exit":
-                    user_input = input(f"End current job before exit? y/n \n\n")
-                    if user_input.lower() == "y":
-                        print("closing job")
-                        self.state_end_job()
-                        return [STATE_EXIT, ""]
-                    else:
-                        return [STATE_EXIT, ""]
+                print(f"Job Active, to end job type {pnk}""end"f" {dft} \n\n")
+                return [STATE_WAIT, ""]
+                #TODO YES I KNOW THIS CODE IS UNREACHABLE
+                #user_input = input(f"Job Active, to end job type {pnk}""end"f" {dft} \n\n")
+                #if user_input.lower() == "end":
+                #    #TODO close job
+                #    print("closing job")
+                #    #self.state_end_job() #TODO this does not obey state machine layout
+                #    #self.datastore[self.user]["job_open"] = False
+                #    return [STATE_CLOSE_JOB, ""]
+                #elif user_input.lower() == "exit":
+                #    user_input = input(f"End current job before exit? y/n \n\n")
+                #    if user_input.lower() == "y":
+                #        print("closing job")
+                #       self.state_end_job()
+                #        return [STATE_EXIT, ""]
+                #    else:
+                #        return [STATE_EXIT, ""]
+                #else:
+                #    print(f"Job open, end at any time by entering {grn}end{dft}")
+                #    return [STATE_WAIT, ""]
             except KeyboardInterrupt:
                 user_input = input(f"End current job before exit? y/n \n\n")
                 if user_input.lower() == "y":
@@ -152,8 +160,12 @@ class timeTracker:
                     return [STATE_EXIT, ""]
                 else:
                     return [STATE_EXIT, ""]
-
-
+            except:
+                print(f"End job at any time by entering {grn}end{dft}")
+                return [STATE_WAIT, ""]
+        else:
+            print("no open job found")
+            return [STATE_WAIT, ""]
 
 
     def state_init(self):
@@ -303,7 +315,7 @@ class timeTracker:
         client =  clientprojecttaskhours[1]
         project = clientprojecttaskhours[2]
         task = clientprojecttaskhours[3]
-        hours = int( clientprojecttaskhours[4])
+        hours = int(clientprojecttaskhours[4])
 
         print(f"adding {grn}{hours}{dft} hours to job {pnk}{client}.{blu}{project}.{ylw}{task}{dft}")
         # get data
@@ -319,37 +331,41 @@ class timeTracker:
         db_data[self.user][client]["hours_since"] += hours
         # Save the Data
         self.save_dict_to_json(db_data)
-        return (STATE_WAIT, "")
+        return [STATE_WAIT, ""]
 
 
 
     def state_list_cmds(self):     # note not all commands implemented yet
         print("\nVerified Commands")
-        print("{client}.{project}.{task}            -> Start Job (also ends open job)")
-        print("end                                  -> End Current Job (while active)")
-        print("add.client.project.task.hours        -> Add number of hours to task")
-        print("exit                                 -> Exit program")
-        print("report.{client}.{project}            -> Generate Report for {client}.{project}")
-        print("\nUnverified commands")
-        print("job.stats                            -> Get Stats for Current Job")
-        print("list.clients                         -> List all clients")
-        print("list.jobs                            -> List all clients then jobs")
-        print("list.tasks                           -> List all tasks in all jobs")
-        print("list.tasks.{client}                  -> list all tasks for {client}")
-        print("task.change.{new_task}               -> Change Current Task")
-        print("user.change.{user_name}              -> Change user to {user_name}")
-        print("user.update.start.{time_in24h}       -> Change user work start time")
-        print("user.update.end.{time_in24h}         -> Change user work end time")
-        print("user.update.lunchstart.{time_in24h}  -> Change user lunch time")
-        print("user.update.lunchend.{time_in24h}    -> Change user lunch time")
-        print("user.stats                           -> Get stats for current user")
-        return (STATE_WAIT, "")
+        print("-----------------------")
+        print(f"{pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft}              -> Start Job (also ends open job)")
+        print(f"end{dft}                                    -> End Current Job (while active)")
+        print(f"add.{pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}.{grn}{{hours}}{dft}  -> Add number of hours to task")
+        print(f"exit{dft}                                   -> Exit program")
+        print(f"report.{pnk}{{client}}.{blu}{{project}}{dft}              -> Generate Report for {{client}}.{{project}}")
+        print("-----------------------")
+        print("#TODO: Make sure end job state can be reached from STATE_WAIT")
+        #print("\nUnverified commands")
+        #print("job.stats                            -> Get Stats for Current Job")
+        #print("list.clients                         -> List all clients")
+        #print("list.jobs                            -> List all clients then jobs")
+        #print("list.tasks                           -> List all tasks in all jobs")
+        #print("list.tasks.{client}                  -> list all tasks for {client}")
+        ##print("task.change.{new_task}               -> Change Current Task")
+        #print("user.change.{user_name}              -> Change user to {user_name}")
+        #print("user.update.start.{time_in24h}       -> Change user work start time")
+        #print("user.update.end.{time_in24h}         -> Change user work end time")
+        #print("user.update.lunchstart.{time_in24h}  -> Change user lunch time")
+        #print("user.update.lunchend.{time_in24h}    -> Change user lunch time")
+        #print("user.stats                           -> Get stats for current user")
+        return [STATE_WAIT, ""]
 
     def report_task(self, client, project, task):
         print(f"Generating Report for {client}.{project}.{task}")
-        return (STATE_WAIT, "")
+        return [STATE_WAIT, ""]
 
     def state_report_project(self, clientproject):
+        #TODO make sure this checks for open job first, otherwase database errors!
         client = clientproject[1]
         project = clientproject[2]
         print(f"Generating Report for {client}.{project}")
@@ -373,15 +389,13 @@ class timeTracker:
             print(f"A Total of: {pnk}{task_hours_total}{dft} on this task to date {self.last_report_time} ")
             db_data[self.user][client][project][task]["hours_since"] = 0
             db_data[self.user][client][project][task]["last_report"] = self.last_report_time
-
-
-        return (STATE_WAIT, "")
+        return [STATE_WAIT, ""]
 
 
 
     def report_client(self, client):
         print(f"Generating Report for {client}")
-        return (STATE_WAIT, "")
+        return [STATE_WAIT, ""]
 
 
     # Utility Functions

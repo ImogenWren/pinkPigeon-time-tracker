@@ -48,7 +48,7 @@ STATE_ADD_HOURS = 7
 STATE_LIST_ALL = 8
 # Global Const
 
-
+user_stats_names_list =  ["name" , "start", "end", "lunch_start", "lunch_end", "job_open","last_job", "hours_total", "hours_since", "last_report", "first_report", "first_log", "last_log"]
 
 #Global Vars
 
@@ -121,6 +121,8 @@ class timeTracker:
             elif (values[0] == "report"):
                 print("generating report")
                 return [STATE_REPORT, values]
+            elif (values[0] == "list"):
+                return [STATE_LIST_ALL, values]
             else:
                 try:
                     #self.state_new_job(values[0], values[1], values[2])
@@ -310,7 +312,8 @@ class timeTracker:
 
             self.datastore[self.user]["job_open"] = False
             self.save_dict_to_json(self.datastore)
-            print(f"""\nClosed Job: {pnk}{self.client}.{blu}{self.project}.{ylw}{self.task}{dft} at {grn}{self.job_end}{dft}\n""")
+            print(f"""\nClosed Job: {pnk}{self.client}.{blu}{self.project}.{ylw}{self.task}{dft} at {grn}{self.job_end}{dft}""")
+            print(f"Start Time: {grn}{task_job_start}{dft}\n")
             print(f"You Worked: {mgn}{task_new_hours}{dft} hours in your last session")
             print(f"You Worked: {mgn}{task_hours}{dft} hours total for your current job")
             return [STATE_WAIT, ""]
@@ -341,8 +344,46 @@ class timeTracker:
         return [STATE_WAIT, ""]
 
     def state_list_all(self):
-        print("All Logged Clients")
-        print("#TODO -> This function")
+        db_data = self.load_json_file()
+        if (db_data == 0):                                 # No valid file found -> create file
+            input("no database found, Press Enter to Exit")               # There should at the very least be a valid JSON file, create the file on opening program
+            return [STATE_EXIT, ""]
+        else:
+            print(f"Listing all {pnk}Clients{dft}:")
+            for client in db_data[self.user]:
+                if client in user_stats_names_list:
+                    i = False
+                    #do nothing
+                else:
+                    hours_since = db_data[self.user][client]["hours_since"]
+                    hours_total = db_data[self.user][client]["hours_total"]
+                    print(f"{pnk}{client}________________________________{dft}")
+                    print(f"{dft}Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
+                    print(f"{dft}projects:")
+                    #print(f"Listing all {blu}projects{wht} for {pnk}{client}{dft}:")
+                    for project in db_data[self.user][client]:
+                        if project in user_stats_names_list:
+                            i = False
+                            # do nothing
+                        else:
+                            hours_since = db_data[self.user][client][project]["hours_since"]
+                            hours_total = db_data[self.user][client][project]["hours_total"]
+                            print(f"           {blu}{project}{dft}")
+                            print(f"{dft}           Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
+                            print(f"{dft}           tasks:")
+                            #print(f"Listing all {ylw}tasks{wht} for {blu}{project}{dft}")
+                            for task in db_data[self.user][client][project]:
+                                if task in user_stats_names_list:
+                                    i = True
+                                else:
+                                    hours_since = db_data[self.user][client][project][task]["hours_since"]
+                                    hours_total = db_data[self.user][client][project][task]["hours_total"]
+                                    print(f"                   {ylw}{task}{dft}")
+                                    # line under just makes printout messy
+                                    #print(f"{dft}                   Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
+
+        #if client in db_data[self.user]:
+        #    print(f"{task} found in {project}")
         return [STATE_WAIT, ""]
 
     def state_list_cmds(self):     # note not all commands implemented yet

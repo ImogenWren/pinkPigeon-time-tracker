@@ -45,6 +45,7 @@ STATE_CLOSE_JOB = 4
 STATE_REPORT = 5
 STATE_HELP = 6
 STATE_ADD_HOURS = 7
+STATE_LIST_ALL = 8
 # Global Const
 
 
@@ -89,6 +90,8 @@ class timeTracker:
                 self.current_state = self.state_add_hours_task(self.current_state[1])
             elif self.current_state[0] == STATE_REPORT:
                 self.current_state = self.state_report_project(self.current_state[1])
+            elif self.current_state[0] == STATE_LIST_ALL:
+                self.current_state = self.state_list_all()
             else:
                 print("state machine exception, resetting (for now)")
                 self.current_state = [STATE_WAIT, ""]
@@ -97,34 +100,38 @@ class timeTracker:
 
 
     def state_wait(self): # Default State waits for user input (may later thread the user input to allow timing to continue to happen alongside)
-        user_input = input(f"\nEnter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job, \nor enter {grn} ""help"f" {dft} to list other commands \n\n").lower()
-        values = re.split(r'[;,. ] ?', user_input)
+        try:
+            user_input = input(f"\nEnter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job, \nor enter {grn} ""help"f" {dft} to list other commands \n\n").lower()
+            values = re.split(r'[;,. ] ?', user_input)
         # for val in values:
         #    print(val.lower())
-        if (values[0] == "exit"):
-            print("Ending Current Job & Exiting Software")
-            # TODO end job script
-            # TODO Exit program script
-            return [STATE_EXIT,""]
-        elif (values[0] == "help"):
-            return [STATE_HELP , ""]
-        elif ((values[0] == "job" and values[1] == "end") or (values[0] == "end" )):
-            print("Ending Current Job")
-            return [STATE_CLOSE_JOB, ""]
-        elif (values[0] == "add"):
-            print("adding hours")
-            return [STATE_ADD_HOURS, values]
-        elif (values[0] == "report"):
-            print("generating report")
-            return [STATE_REPORT, values]
-        else:
-            try:
-                #self.state_new_job(values[0], values[1], values[2])
-                return [STATE_NEW_JOB, values]
-            except:
-                print("Exception in state_new_job, ignoring previous input")
-                print("type ""help"" to list commands" )
-        return [STATE_WAIT, values]
+            if (values[0] == "exit"):
+                print("Ending Current Job & Exiting Software")
+                # TODO end job script
+                # TODO Exit program script
+                return [STATE_EXIT,""]
+            elif (values[0] == "help"):
+                return [STATE_HELP , ""]
+            elif ((values[0] == "job" and values[1] == "end") or (values[0] == "end" )):
+                print("Ending Current Job")
+                return [STATE_CLOSE_JOB, ""]
+            elif (values[0] == "add"):
+                print("adding hours")
+                return [STATE_ADD_HOURS, values]
+            elif (values[0] == "report"):
+                print("generating report")
+                return [STATE_REPORT, values]
+            else:
+                try:
+                    #self.state_new_job(values[0], values[1], values[2])
+                    return [STATE_NEW_JOB, values]
+                except:
+                    print("Exception in state_new_job, ignoring previous input")
+                    print("type ""help"" to list commands" )
+            return [STATE_WAIT, ""]
+        except:
+            print("Exception Caught")
+            return [STATE_WAIT, ""]
 
 
 
@@ -333,7 +340,10 @@ class timeTracker:
         self.save_dict_to_json(db_data)
         return [STATE_WAIT, ""]
 
-
+    def state_list_all(self):
+        print("All Logged Clients")
+        print("#TODO -> This function")
+        return [STATE_WAIT, ""]
 
     def state_list_cmds(self):     # note not all commands implemented yet
         print("\nVerified Commands")
@@ -343,6 +353,8 @@ class timeTracker:
         print(f"add.{pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}.{grn}{{hours}}{dft}  -> Add number of hours to task")
         print(f"exit{dft}                                   -> Exit program")
         print(f"report.{pnk}{{client}}.{blu}{{project}}{dft}              -> Generate Report for {{client}}.{{project}}")
+        print(f"list{dft}                                   -> List all clients, projects & tasks")
+        print(f"list.{pnk}{{client}}{dft}                                   -> List Projects & tasks for client")
         print("-----------------------")
         print("#TODO: Make sure end job state can be reached from STATE_WAIT")
         #print("\nUnverified commands")

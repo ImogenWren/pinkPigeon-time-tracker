@@ -2,7 +2,7 @@ import subprocess
 import os
 
 
-def compile_to_exe(script_path):
+def compile_to_exe(script_path, exe_name):
     # Check if the script exists
     if not os.path.isfile(script_path):
         print(f"Error: {script_path} does not exist.")
@@ -10,11 +10,11 @@ def compile_to_exe(script_path):
 
     # Run the PyInstaller command to compile the script
     try:
-        subprocess.run(["pyinstaller", "--onefile", "--console", script_path, "--icon=icon/pinkPigeon-logo.ico"], check=True)
+        subprocess.run(["pyinstaller", "--onefile", "--console", f"--name={exe_name}" ,script_path, "--icon=icon/pinkPigeon-logo.ico"], check=True)
         print(f"Compilation completed! Check the 'dist' folder for the .exe file.")
     except subprocess.CalledProcessError:
         print("Compilation failed. Please check the script for errors.")
 
 
 # Example usage: replace 'your_script.py' with the path to your Python script
-compile_to_exe("main.py")
+compile_to_exe("main.py", "pinkPigeon")

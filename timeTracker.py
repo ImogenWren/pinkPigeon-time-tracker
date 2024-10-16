@@ -16,7 +16,7 @@ dft = prettyCLI.pcli["df"]                # default all
 #pnk = prettyCLI.pcli["fg"]["pink"]
 pnk = Fore.LIGHTMAGENTA_EX
 wht = Fore.WHITE
-dft = Fore.WHITE
+dft = Fore.RESET
 blu = Fore.LIGHTCYAN_EX
 ylw = Fore.LIGHTYELLOW_EX
 blk = Fore.BLACK
@@ -101,7 +101,7 @@ class timeTracker:
 
     def state_wait(self): # Default State waits for user input (may later thread the user input to allow timing to continue to happen alongside)
         try:
-            user_input = input(f"\nEnter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job, \nor enter {grn} ""help"f" {dft} to list other commands \n\n").lower()
+            user_input = input(f"\nEnter {pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft} to begin job, \n{wht}or enter {grn} ""help"f" {wht} to list other commands \n\n").lower()
             values = re.split(r'[;,. ] ?', user_input)
         # for val in values:
         #    print(val.lower())
@@ -113,7 +113,7 @@ class timeTracker:
             elif (values[0] == "help"):
                 return [STATE_HELP , ""]
             elif ((values[0] == "job" and values[1] == "end") or (values[0] == "end" )):
-                print("Ending Current Job")
+                #
                 return [STATE_CLOSE_JOB, ""]
             elif (values[0] == "add"):
                 print("adding hours")
@@ -232,9 +232,9 @@ class timeTracker:
             self.datastore = db_data
             ## Check for existing client in database
             if client in self.datastore[self.user]:
-                print(f"{client} found in {self.username}")
+                print(f"{pnk}{client}{wht} found in {grn}{self.username}")
             else:
-                print(f"{client} not found in {self.username}, Create Client?")
+                print(f"{pnk}{client}{wht} not found in {grn}{self.username}{wht}, Create Client?")
                 if (self.user_yes_no()):
                     self.datastore[self.user].setdefault(client, {"hours_total":0,"hours_since":0, "last_report": ""})
 
@@ -245,9 +245,9 @@ class timeTracker:
             self.datastore[self.user][client]["last_log"] =  self.task_start          # the last log should be entered always as this is where the calculation is done
 
             if project in self.datastore[self.user][client]:
-                print(f"{project} found in {client}")
+                print(f"{blu}{project}{wht} found in {pnk}{client}{dft}")
             else:
-                print(f"{project} not found for {client}, Create Project?")
+                print(f"{blu}{project}{wht} not found for {pnk}{client}{wht}, Create Project?")
                 if (self.user_yes_no()):
                     self.datastore[self.user][client].setdefault(project, {"hours_total":0,"hours_since":0, "last_report": ""})
                     #self.datastore[self.user][client][project].setdefault("hours_total", 0)
@@ -259,7 +259,7 @@ class timeTracker:
             if task in self.datastore[self.user][client][project]:
                 print(f"{task} found in {project}")
             else:
-                print(f"{task} not found for {project}, Creating Task")
+                print(f"{ylw}{task}{wht} not found for {blu}{project}{wht}, Creating Task")
                 if (self.user_yes_no()):
                     self.datastore[self.user][client][project].setdefault(task, {"hours_total":0,"hours_since":0, "last_report": ""})
                     #self.datastore[self.user][client][project][task].setdefault("hours_total", 0)
@@ -284,7 +284,7 @@ class timeTracker:
             return STATE_EXIT, ("error: no db")
             # TODO CREATE FILE?
         else:  # File found -> look for existing jobs
-            print(f"Ending Current Job{db_data[self.user]["last_job"]}")
+            print(f"Ending Current Job {grn}{db_data[self.user]["last_job"]}{dft}")
             self.datastore = db_data
             values = re.split(r'[;,. ] ?', self.datastore[self.user]["last_job"])
             self.client = values[0]
@@ -349,45 +349,47 @@ class timeTracker:
             input("no database found, Press Enter to Exit")               # There should at the very least be a valid JSON file, create the file on opening program
             return [STATE_EXIT, ""]
         else:
-            print(f"Listing all {pnk}Clients{dft}:")
-            for client in db_data[self.user]:
-                if client in user_stats_names_list:
-                    i = False
-                    #do nothing
-                else:
-                    hours_since = db_data[self.user][client]["hours_since"]
-                    hours_total = db_data[self.user][client]["hours_total"]
-                    print(f"{pnk}{client}________________________________{dft}")
-                    print(f"{dft}Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
-                    print(f"{dft}projects:")
+            try:
+                print(f"Listing all {pnk}Clients{dft}:")
+                for client in db_data[self.user]:
+                    if client in user_stats_names_list:    ## Ignore any of the keys that are in the list
+                        i = False
+                        #do nothing
+                    else:
+                        hours_since = db_data[self.user][client].get("hours_since", 0)
+                        hours_total = db_data[self.user][client].get("hours_total",0)
+                        print(f"{pnk}{client}________________________________{dft}")
+                        print(f"{wht}Hours Since Last Report: {grn}{hours_since:.2f}{wht}, Hours Total: {grn}{hours_total:.2f}{dft}")
+                        print(f"{dft}projects:")
                     #print(f"Listing all {blu}projects{wht} for {pnk}{client}{dft}:")
-                    for project in db_data[self.user][client]:
-                        if project in user_stats_names_list:
-                            i = False
+                        for project in db_data[self.user][client]:
+                            if project in user_stats_names_list:
+                                i = False
                             # do nothing
-                        else:
-                            hours_since = db_data[self.user][client][project]["hours_since"]
-                            hours_total = db_data[self.user][client][project]["hours_total"]
-                            print(f"           {blu}{project}{dft}")
-                            print(f"{dft}           Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
-                            print(f"{dft}           tasks:")
-                            #print(f"Listing all {ylw}tasks{wht} for {blu}{project}{dft}")
-                            for task in db_data[self.user][client][project]:
-                                if task in user_stats_names_list:
-                                    i = True
-                                else:
-                                    hours_since = db_data[self.user][client][project][task]["hours_since"]
-                                    hours_total = db_data[self.user][client][project][task]["hours_total"]
-                                    print(f"                   {ylw}{task}{dft}")
-                                    # line under just makes printout messy
-                                    #print(f"{dft}                   Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
-
+                            else:
+                                hours_since = db_data[self.user][client][project].get("hours_since", 0)
+                                hours_total = db_data[self.user][client][project].get("hours_total",0)
+                                print(f"           {blu}{project}{dft}")
+                                print(f"{wht}           Hours Since Last Report: {grn}{hours_since:.2f}{wht}, Hours Total: {grn}{hours_total:.2f}{dft}")
+                                print(f"{dft}           tasks:")
+                                #print(f"Listing all {ylw}tasks{wht} for {blu}{project}{dft}")
+                                for task in db_data[self.user][client][project]:
+                                    if task in user_stats_names_list:
+                                        i = True
+                                    else:
+                                        hours_since = db_data[self.user][client][project][task].get("hours_since", 0)
+                                        hours_total = db_data[self.user][client][project][task].get("hours_total",0)
+                                        print(f"                   {ylw}{task}{dft}")
+                                        # line under just makes printout messy
+                                        #print(f"{dft}                   Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
+            except Exception as e:
+                print(f"Unknown exception {e} caught")
         #if client in db_data[self.user]:
         #    print(f"{task} found in {project}")
         return [STATE_WAIT, ""]
 
     def state_list_cmds(self):     # note not all commands implemented yet
-        print("\nVerified Commands")
+        print(f"\n{pnk}{bggry}  pinkPigeon Commands  ")
         print("-----------------------")
         print(f"{pnk}{{client}}.{blu}{{project}}.{ylw}{{task}}{dft}              -> Start Job (also ends open job)")
         print(f"end{dft}                                    -> End Current Job (while active)")
@@ -395,9 +397,8 @@ class timeTracker:
         print(f"exit{dft}                                   -> Exit program")
         print(f"report.{pnk}{{client}}.{blu}{{project}}{dft}              -> Generate Report for {{client}}.{{project}}")
         print(f"list{dft}                                   -> List all clients, projects & tasks")
-        print(f"list.{pnk}{{client}}{dft}                                   -> List Projects & tasks for client")
+        #print(f"list.{pnk}{{client}}{dft}                                   -> List Projects & tasks for client")
         print("-----------------------")
-        print("#TODO: Make sure end job state can be reached from STATE_WAIT")
         #print("\nUnverified commands")
         #print("job.stats                            -> Get Stats for Current Job")
         #print("list.clients                         -> List all clients")
@@ -486,7 +487,7 @@ class timeTracker:
             return 0
 
     def user_yes_no(self):
-        user_input = input("y/n  (No will cancel create job)\n\n")
+        user_input = input(f"y/n {wht} (No will cancel create job)\n\n")
         if user_input.lower() == "y":
             return 1
         else:

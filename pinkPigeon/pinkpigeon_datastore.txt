@@ -6,7 +6,7 @@
         "end": "17:00",
         "lunch_start": "12:30",
         "lunch_end": "13:30",
-        "job_open": true,
+        "job_open": false,
         "last_job": "dandidrone.dandidrone.pwm-controller",
         "remotelabs": {
             "hours_total": 12.966666666666667,
@@ -64,23 +64,23 @@
             }
         },
         "dandidrone": {
-            "hours_total": 6.25,
-            "hours_since": 0,
+            "hours_total": 7.933333333333333,
+            "hours_since": 1.6833333333333333,
             "last_report": "",
             "first_log": "2024-10-15 10:05",
-            "last_log": "2024-10-16 15:14",
+            "last_log": "2024-10-16 16:55",
             "dandidrone": {
-                "hours_total": 6.25,
-                "hours_since": 0,
+                "hours_total": 7.933333333333333,
+                "hours_since": 1.6833333333333333,
                 "last_report": "",
                 "first_log": "2024-10-15 10:05",
-                "last_log": "2024-10-16 15:14",
+                "last_log": "2024-10-16 16:55",
                 "pwm-controller": {
-                    "hours_total": 6.25,
-                    "hours_since": 0,
+                    "hours_total": 7.933333333333333,
+                    "hours_since": 1.6833333333333333,
                     "last_report": "",
                     "first_log": "2024-10-15 10:05",
-                    "last_log": "2024-10-16 15:14"
+                    "last_log": "2024-10-16 16:55"
                 }
             }
         },

@@ -3,6 +3,7 @@
 
 ![image](https://github.com/user-attachments/assets/b5e50d5f-46da-4f1c-b499-9de5c00cc9a4)
 
+```
  pinkPigeon Commands
 -----------------------
 {client}.{project}.{task}              -> Start Job (also ends open job)
@@ -14,6 +15,7 @@ list                                   -> List all clients, projects & tasks
 delete.{client}                        -> Delete all data for {client}
 help                                   -> List all available commands
 -----------------------
+```
 
 ## List Output
 ![image](https://github.com/user-attachments/assets/0b9bce27-bfc5-4900-8841-fc785ab50828)

@@ -3,20 +3,21 @@
 
 ![image](https://github.com/user-attachments/assets/b5e50d5f-46da-4f1c-b499-9de5c00cc9a4)
 
-Starting Job:
-- `{client}.{project}.{task}`
+ pinkPigeon Commands
+-----------------------
+{client}.{project}.{task}              -> Start Job (also ends open job)
+end                                    -> End Current Job (while active)
+add.{client}.{project}.{task}.{hours}  -> Add number of hours to task
+exit                                   -> Exit program
+report.{client}.{project}              -> Generate Report for {client}.{project}
+list                                   -> List all clients, projects & tasks
+delete.{client}                        -> Delete all data for {client}
+help                                   -> List all available commands
+-----------------------
 
-End Job:
--  `end`
+## List Output
+![image](https://github.com/user-attachments/assets/0b9bce27-bfc5-4900-8841-fc785ab50828)
 
-Report Hours for project
-- `report.{client}.{project}.{task}`
-
-Add (or subtract) hours from task
-- `add.{client}.{project}.{task}.{hours} `
-
-List All Commands:
-- `help`
 
 
 

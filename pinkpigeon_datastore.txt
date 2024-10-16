@@ -7,7 +7,7 @@
         "lunch_start": "12:30",
         "lunch_end": "13:30",
         "job_open": false,
-        "last_job": "remotelabs.meeting.weekly",
+        "last_job": "client.project.task",
         "remotelabs": {
             "hours_total": 12.966666666666667,
             "first_log": "2024-10-07 11:05",
@@ -81,6 +81,27 @@
                     "last_report": "",
                     "first_log": "2024-10-15 10:05",
                     "last_log": "2024-10-15 16:20"
+                }
+            }
+        },
+        "client": {
+            "hours_total": 0.016666666666666666,
+            "hours_since": 0.016666666666666666,
+            "last_report": "",
+            "first_log": "2024-10-16 15:27",
+            "last_log": "2024-10-16 15:28",
+            "project": {
+                "hours_total": 0.016666666666666666,
+                "hours_since": 0.016666666666666666,
+                "last_report": "",
+                "first_log": "2024-10-16 15:27",
+                "last_log": "2024-10-16 15:28",
+                "task": {
+                    "hours_total": 0.016666666666666666,
+                    "hours_since": 0.016666666666666666,
+                    "last_report": "",
+                    "first_log": "2024-10-16 15:27",
+                    "last_log": "2024-10-16 15:28"
                 }
             }
         }

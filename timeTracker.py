@@ -230,9 +230,11 @@ class timeTracker:
         print(f"Welcome {self.username}\n")
         if self.datastore[self.user]["job_open"] == True:
             current_job = self.datastore[self.user]["last_job"]
-            print(f"Open job {current_job} found")
+            values = re.split(r'[;,. ] ?', current_job)
+            print(f"Open job: {pnk}{values[0]}.{blu}{values[1]}.{ylw}{values[2]}{dft} found")
             user_input = input("Continue job? y/n\n\n")
             if user_input.lower() == "y":
+                self.job_open = True
                 return [STATE_JOB_ACTIVE, ""]
             else:
                 #self.state_end_job()
@@ -264,6 +266,7 @@ class timeTracker:
             # Update LOCAL datastore with new JSON data
             self.datastore = db_data
             ## Check for existing client in database
+            print("\n")
             if client in self.datastore[self.user]:
                 print(f"{pnk}{client}{wht} found in {grn}{self.username}")
             else:
@@ -290,7 +293,7 @@ class timeTracker:
             self.datastore[self.user][client][project]["last_log"] = self.task_start
 
             if task in self.datastore[self.user][client][project]:
-                print(f"{task} found in {project}")
+                print(f"{ylw}{task}{dft} found in {blu}{project}")
             else:
                 print(f"{ylw}{task}{wht} not found for {blu}{project}{wht}, Creating Task")
                 if (self.user_yes_no()):
@@ -329,29 +332,35 @@ class timeTracker:
                 client_job_start = self.datastore[self.user][self.client]["last_log"]
                 client_new_hours = self.time_difference(client_job_start, self.job_end)
                 client_current_hours = self.datastore[self.user][self.client]["hours_total"]
+                client_hours_since = self.datastore[self.user][self.client]["hours_since"]
                 self.datastore[self.user][self.client]["last_log"] = self.job_end
                 self.datastore[self.user][self.client]["hours_total"] = client_current_hours + client_new_hours
+                self.datastore[self.user][self.client]["hours_since"] = client_hours_since  + client_new_hours
 
                 project_job_start = self.datastore[self.user][self.client][self.project]["last_log"]
                 project_new_hours = self.time_difference(project_job_start, self.job_end)
                 project_current_hours = self.datastore[self.user][self.client][self.project]["hours_total"]
+                project_hours_since = self.datastore[self.user][self.client][self.project]["hours_since"]
                 self.datastore[self.user][self.client][self.project]["last_log"] = self.job_end
                 self.datastore[self.user][self.client][self.project]["hours_total"] = project_current_hours + project_new_hours
+                self.datastore[self.user][self.client][self.project]["hours_since"] = project_hours_since + project_new_hours
 
                 task_job_start = self.datastore[self.user][self.client][self.project][self.task]["last_log"]
                 task_new_hours = self.time_difference(task_job_start, self.job_end)
                 task_current_hours = self.datastore[self.user][self.client][self.project][self.task]["hours_total"]
+                task_hours_since = self.datastore[self.user][self.client][self.project][self.task]["hours_since"]
                 task_hours = task_current_hours + task_new_hours
                 self.datastore[self.user][self.client][self.project][self.task]["last_log"] = self.job_end
                 self.datastore[self.user][self.client][self.project][self.task]["hours_total"] = task_hours
+                self.datastore[self.user][self.client][self.project][self.task]["hours_since"] = task_hours_since + task_new_hours
 
                 self.datastore[self.user]["job_open"] = False
                 self.job_open = False
                 self.save_dict_to_json(self.datastore)
                 print(f"""\nClosed Job: {pnk}{self.client}.{blu}{self.project}.{ylw}{self.task}{dft} at {grn}{self.job_end}{dft}""")
                 print(f"Start Time: {grn}{task_job_start}{dft}\n")
-                print(f"You Worked: {mgn}{task_new_hours}{dft} hours in your last session")
-                print(f"You Worked: {mgn}{task_hours}{dft} hours total for your current job")
+                print(f"You Worked: {mgn}{task_new_hours:.2f}{dft} hours in your last session")
+                print(f"You Worked: {mgn}{task_hours:.2f}{dft} hours total for your current job")
                 return [STATE_WAIT, ""]
         else:
             print("No open job found")
@@ -461,8 +470,8 @@ class timeTracker:
         last_report = db_data[self.user][client][project]["last_report"]
         db_data[self.user][client][project]["hours_since"] = 0
         db_data[self.user][client][project]["last_report"] = self.last_report_time
-        print(f"You Worked: {grn}{project_hours_since}{dft} since the last report date: {ylw}{last_report}{dft}")
-        print(f"A Total of: {pnk}{project_hours_total}{dft} on this project to date {self.last_report_time}")
+        print(f"You Worked: {grn}{project_hours_since:.2f}{dft} since the last report date: {ylw}{last_report}{dft}")
+        print(f"A Total of: {pnk}{project_hours_total:.2f}{dft} on this project to date {self.last_report_time}")
         print(f"\n\nThis breaks down to the following tasks as:")
         tasks = {key: value for key, value in db_data[self.user][client][project].items() if isinstance(value, dict)}
         for task in tasks:
@@ -470,8 +479,8 @@ class timeTracker:
             task_hours_total = db_data[self.user][client][project][task]["hours_total"]
             task_hours_since = db_data[self.user][client][project][task]["hours_since"]
             task_last_rpt = db_data[self.user][client][project][task]["last_report"]
-            print(f"You worked: {grn}{task_hours_since}{dft} since the last report date: {ylw}{task_last_rpt}")
-            print(f"A Total of: {pnk}{task_hours_total}{dft} on this task to date {self.last_report_time} ")
+            print(f"You worked: {grn}{task_hours_since:.2f}{dft} since the last report date: {ylw}{task_last_rpt}")
+            print(f"A Total of: {pnk}{task_hours_total:.2f}{dft} on this task to date {self.last_report_time} ")
             db_data[self.user][client][project][task]["hours_since"] = 0
             db_data[self.user][client][project][task]["last_report"] = self.last_report_time
         return [STATE_WAIT, ""]

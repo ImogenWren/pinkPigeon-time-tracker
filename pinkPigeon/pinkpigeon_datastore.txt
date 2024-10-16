@@ -6,8 +6,8 @@
         "end": "17:00",
         "lunch_start": "12:30",
         "lunch_end": "13:30",
-        "job_open": false,
-        "last_job": "remotelabs.meeting.weekly",
+        "job_open": true,
+        "last_job": "dandidrone.dandidrone.pwm-controller",
         "remotelabs": {
             "hours_total": 12.966666666666667,
             "first_log": "2024-10-07 11:05",
@@ -68,19 +68,40 @@
             "hours_since": 0,
             "last_report": "",
             "first_log": "2024-10-15 10:05",
-            "last_log": "2024-10-15 16:20",
+            "last_log": "2024-10-16 15:14",
             "dandidrone": {
                 "hours_total": 6.25,
                 "hours_since": 0,
                 "last_report": "",
                 "first_log": "2024-10-15 10:05",
-                "last_log": "2024-10-15 16:20",
+                "last_log": "2024-10-16 15:14",
                 "pwm-controller": {
                     "hours_total": 6.25,
                     "hours_since": 0,
                     "last_report": "",
                     "first_log": "2024-10-15 10:05",
-                    "last_log": "2024-10-15 16:20"
+                    "last_log": "2024-10-16 15:14"
+                }
+            }
+        },
+        "primary-engineer": {
+            "hours_total": 0.4666666666666667,
+            "hours_since": 0,
+            "last_report": "",
+            "first_log": "2024-10-16 14:34",
+            "last_log": "2024-10-16 15:02",
+            "glowbot": {
+                "hours_total": 0.4666666666666667,
+                "hours_since": 0,
+                "last_report": "",
+                "first_log": "2024-10-16 14:34",
+                "last_log": "2024-10-16 15:02",
+                "video": {
+                    "hours_total": 0.4666666666666667,
+                    "hours_since": 0,
+                    "last_report": "",
+                    "first_log": "2024-10-16 14:34",
+                    "last_log": "2024-10-16 15:02"
                 }
             }
         }

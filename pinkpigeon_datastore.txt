@@ -7,109 +7,80 @@
         "lunch_start": "12:30",
         "lunch_end": "13:30",
         "job_open": false,
-        "last_job": "imogen.pinkpigeon.sw-dev",
-        "client": {
-            "hours_total": 21.03333333333333,
-            "hours_since": 0,
-            "last_report": "",
-            "first_log": "2024-10-07 17:22",
-            "last_log": "2024-10-08 14:25",
-            "project": {
-                "hours_total": 21.03333333333333,
-                "hours_since": 0,
-                "last_report": "",
-                "first_log": "2024-10-07 17:22",
-                "last_log": "2024-10-08 14:25",
-                "task": {
-                    "hours_total": 0.016666666666666666,
-                    "hours_since": 0,
-                    "last_report": "",
-                    "first_log": "2024-10-07 17:22",
-                    "last_log": "2024-10-07 17:24"
-                },
-                "job": {
-                    "hours_total": 21.016666666666666,
-                    "hours_since": 0,
-                    "last_report": "",
-                    "first_log": "2024-10-07 17:24",
-                    "last_log": "2024-10-08 14:25"
-                }
-            }
-        },
+        "last_job": "remotelabs.meeting.weekly",
         "remotelabs": {
-            "hours_total": 0.04999999999999988,
-            "hours_since": 0,
-            "last_report": "",
-            "first_log": "2024-10-08 16:16",
-            "last_log": "2024-10-08 17:40",
+            "hours_total": 12.966666666666667,
+            "first_log": "2024-10-07 11:05",
+            "last_log": "2024-10-16 12:06",
             "stc": {
-                "hours_total": 0.04999999999999988,
-                "hours_since": 0,
-                "last_report": "",
-                "first_log": "2024-10-08 16:16",
-                "last_log": "2024-10-08 17:40",
+                "hours_total": 11.4,
+                "first_log": "2024-10-07 11:05",
+                "last_log": "2024-10-11 16:51",
                 "fw-dev": {
-                    "hours_total": 3.033333333333333,
-                    "hours_since": 0,
-                    "last_report": "",
-                    "first_log": "2024-10-08 16:16",
-                    "last_log": "2024-10-08 16:39"
+                    "hours_total": 8.566666666666666,
+                    "first_log": "2024-10-07 11:05",
+                    "last_log": "2024-10-11 16:51"
                 },
-                "testing": {
-                    "hours_total": 0.016666666666666666,
-                    "hours_since": 0,
-                    "last_report": "",
-                    "first_log": "2024-10-08 17:32",
-                    "last_log": "2024-10-08 17:33"
-                },
-                "ui": {
-                    "hours_total": 0.0,
-                    "hours_since": 0,
-                    "last_report": "",
-                    "first_log": "2024-10-08 17:40",
-                    "last_log": "2024-10-08 17:40"
+                "acceptance-testing": {
+                    "hours_total": 2.833333333333333,
+                    "first_log": "2024-10-07 13:44",
+                    "last_log": "2024-10-07 16:41"
                 }
-            }
-        },
-        "pigeon": {
-            "hours_total": 0.0,
-            "hours_since": 0,
-            "last_report": "",
-            "first_log": "2024-10-08 17:17",
-            "last_log": "2024-10-08 17:17",
-            "pinkpigeon": {
-                "hours_total": 0.0,
+            },
+            "meeting": {
+                "hours_total": 1.5666666666666667,
                 "hours_since": 0,
                 "last_report": "",
-                "first_log": "2024-10-08 17:17",
-                "last_log": "2024-10-08 17:17",
-                "programming": {
-                    "hours_total": 0.0,
+                "first_log": "2024-10-16 10:32",
+                "last_log": "2024-10-16 12:06",
+                "weekly": {
+                    "hours_total": 1.5666666666666667,
                     "hours_since": 0,
                     "last_report": "",
-                    "first_log": "2024-10-08 17:17",
-                    "last_log": "2024-10-08 17:17"
+                    "first_log": "2024-10-16 10:32",
+                    "last_log": "2024-10-16 12:06"
                 }
             }
         },
         "imogen": {
-            "hours_total": 0.21666666666666667,
+            "hours_total": 1.0,
             "hours_since": 0,
             "last_report": "",
-            "first_log": "2024-10-10 13:51",
-            "last_log": "2024-10-10 14:21",
-            "pinkpigeon": {
-                "hours_total": 0.21666666666666667,
+            "first_log": "2024-10-14 21:16",
+            "last_log": "2024-10-14 22:16",
+            "d&d": {
+                "hours_total": 1.0,
                 "hours_since": 0,
                 "last_report": "",
-                "first_log": "2024-10-10 13:51",
-                "last_log": "2024-10-10 14:21",
-                "sw-dev": {
-                    "hours_total": 0.21666666666666667,
+                "first_log": "2024-10-14 21:16",
+                "last_log": "2024-10-14 22:16",
+                "angstrom": {
+                    "hours_total": 1.0,
                     "hours_since": 0,
                     "last_report": "",
-                    "first_log": "2024-10-10 13:51",
-                    "last_log": "2024-10-10 14:21"
+                    "first_log": "2024-10-14 21:16",
+                    "last_log": "2024-10-14 22:16"
+                }
+            }
+        },
+        "dandidrone": {
+            "hours_total": 6.25,
+            "hours_since": 0,
+            "last_report": "",
+            "first_log": "2024-10-15 10:05",
+            "last_log": "2024-10-15 16:20",
+            "dandidrone": {
+                "hours_total": 6.25,
+                "hours_since": 0,
+                "last_report": "",
+                "first_log": "2024-10-15 10:05",
+                "last_log": "2024-10-15 16:20",
+                "pwm-controller": {
+                    "hours_total": 6.25,
+                    "hours_since": 0,
+                    "last_report": "",
+                    "first_log": "2024-10-15 10:05",
+                    "last_log": "2024-10-15 16:20"
                 }
             }
         }

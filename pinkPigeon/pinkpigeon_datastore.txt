@@ -7,11 +7,11 @@
         "lunch_start": "12:30",
         "lunch_end": "13:30",
         "job_open": false,
-        "last_job": "dandidrone.dandidrone.pwm-controller",
+        "last_job": "remotelabs.meeting.pendulum",
         "remotelabs": {
-            "hours_total": 12.966666666666667,
+            "hours_total": 13.85,
             "first_log": "2024-10-07 11:05",
-            "last_log": "2024-10-16 12:06",
+            "last_log": "2024-10-17 10:54",
             "stc": {
                 "hours_total": 11.4,
                 "first_log": "2024-10-07 11:05",
@@ -28,19 +28,27 @@
                 }
             },
             "meeting": {
-                "hours_total": 1.5666666666666667,
-                "hours_since": 0,
+                "hours_total": 2.45,
+                "hours_since": 0.8833333333333333,
                 "last_report": "",
                 "first_log": "2024-10-16 10:32",
-                "last_log": "2024-10-16 12:06",
+                "last_log": "2024-10-17 10:54",
                 "weekly": {
                     "hours_total": 1.5666666666666667,
                     "hours_since": 0,
                     "last_report": "",
                     "first_log": "2024-10-16 10:32",
                     "last_log": "2024-10-16 12:06"
+                },
+                "pendulum": {
+                    "hours_total": 0.8833333333333333,
+                    "hours_since": 0.8833333333333333,
+                    "last_report": "",
+                    "first_log": "2024-10-17 10:01",
+                    "last_log": "2024-10-17 10:54"
                 }
-            }
+            },
+            "hours_since": 0.8833333333333333
         },
         "imogen": {
             "hours_total": 1.0,
@@ -64,23 +72,23 @@
             }
         },
         "dandidrone": {
-            "hours_total": 7.933333333333333,
-            "hours_since": 1.6833333333333333,
+            "hours_total": 8.75,
+            "hours_since": 2.5,
             "last_report": "",
             "first_log": "2024-10-15 10:05",
-            "last_log": "2024-10-16 16:55",
+            "last_log": "2024-10-17 10:00",
             "dandidrone": {
-                "hours_total": 7.933333333333333,
-                "hours_since": 1.6833333333333333,
+                "hours_total": 8.75,
+                "hours_since": 2.5,
                 "last_report": "",
                 "first_log": "2024-10-15 10:05",
-                "last_log": "2024-10-16 16:55",
+                "last_log": "2024-10-17 10:00",
                 "pwm-controller": {
-                    "hours_total": 7.933333333333333,
-                    "hours_since": 1.6833333333333333,
+                    "hours_total": 8.75,
+                    "hours_since": 2.5,
                     "last_report": "",
                     "first_log": "2024-10-15 10:05",
-                    "last_log": "2024-10-16 16:55"
+                    "last_log": "2024-10-17 10:00"
                 }
             }
         },

@@ -110,6 +110,7 @@ class timeTracker:
         print(f"report.{pnk}{{client}}.{blu}{{project}}{wht}              -> Generate Report for {{client}}.{{project}}")
         print(f"list{wht}                                   -> List all clients, projects & tasks")
         print(f"delete.{pnk}{{client}}{wht}                        -> Delete all data for {{client}}")
+        print(f"help   {pnk}       {wht}                         -> Print all Commands")
         #print(f"list.{pnk}{{client}}{dft}                                   -> List Projects & tasks for client")
         print("-----------------------")
         #print("\nUnverified commands")
@@ -134,36 +135,64 @@ class timeTracker:
             values = re.split(r'[;,. ] ?', user_input)
         # for val in values:
         #    print(val.lower())
-            if (values[0] == "exit"):
-                print("Ending Current Job & Exiting Software")
-                # TODO end job script
-                # TODO Exit program script
-                return [STATE_EXIT,""]
-            elif (values[0] == "help"):
-                return [STATE_HELP , ""]
-            elif ((values[0] == "job" and values[1] == "end") or (values[0] == "end" )):
-                #
-                return [STATE_CLOSE_JOB, ""]
-            elif (values[0] == "add"):
-                print("adding hours")
-                return [STATE_ADD_HOURS, values]
-            elif (values[0] == "report"):
-                print("generating report")
-                return [STATE_REPORT, values]
-            elif (values[0] == "list"):
-                return [STATE_LIST_ALL, values]
-            elif (values[0] == "delete"):
-                return [STATE_DELETE_CLIENT, values[1]]
-            else:
-                try:
-                    #self.state_new_job(values[0], values[1], values[2])
+            num_values = len(values)
+            if (num_values == 0):
+                print("No command entered")
+                return [STATE_WAIT, ""]
+            elif (num_values == 1):
+                if (values[0] == "exit"):
+                    print("Exiting Software")
+                    return [STATE_EXIT,""]
+                elif (values[0] == "help"):
+                    return [STATE_HELP , ""]
+                elif (values[0] == "end"):
+                    return [STATE_CLOSE_JOB, ""]
+                elif (values[0] == "list"):
+                    return [STATE_LIST_ALL, values]
+                else:
+                    print(f"Unknown Command Entered: {values[0]}")
+                    return [STATE_WAIT, ""]
+
+            elif (num_values == 2):
+                if ((values[0] == "job" and values[1] == "end") or (values[0] == "end" )):
+                    return [STATE_CLOSE_JOB, ""]
+                elif (values[0] == "delete"):
+                    return [STATE_DELETE_CLIENT, values[1]]
+                else:
+                    print(f"Unable to Parse Commands: {values[0]}, {values[1]}")
+                    return [STATE_WAIT, ""]
+
+            elif (num_values == 3):
+                if (values[0] == "report"):
+                    print("generating report")
+                    return [STATE_REPORT, values]
+                else:
                     return [STATE_NEW_JOB, values]
-                except:
-                    print("Exception in state_new_job, ignoring previous input")
-                    print("type ""help"" to list commands" )
-            return [STATE_WAIT, ""]
-        except:
-            print("Exception Caught")
+
+            elif(num_values == 4):
+                print(f"Unable to recognise commands {values[0]}, {values[1]}, {values[2]}, {values[3]}")
+                return [STATE_WAIT, ""]
+
+            elif (num_values == 5):
+                if (values[0] == "add"):
+                    print("adding hours")
+                    return [STATE_ADD_HOURS, values]
+                else:
+                    print(f"Unable to Parse Commands: {values[0]}, {values[1]}, {values[2]}, {values[3]}, {values[4]}")
+                    return [STATE_WAIT, ""]
+
+            elif (num_values > 5):
+                print("Too many vars, try again ")
+                return [STATE_WAIT, ""]
+            else:
+                print("I don't even know how you got here")
+                return [STATE_WAIT, ""]
+
+        except KeyboardInterrupt:
+            print("User Keyboard Interupt")
+            return [STATE_WAIT]
+        except Exception as e :
+            print(f"Exception: {e} Caught")
             return [STATE_WAIT, ""]
 
 
@@ -229,15 +258,15 @@ class timeTracker:
             #print(json.dumps(db_data, indent=4))
         print(f"Welcome {self.username}\n")
         if self.datastore[self.user]["job_open"] == True:
+            self.job_open = True  # Must be open for it to close in close job state
             current_job = self.datastore[self.user]["last_job"]
             values = re.split(r'[;,. ] ?', current_job)
             print(f"Open job: {pnk}{values[0]}.{blu}{values[1]}.{ylw}{values[2]}{dft} found")
             user_input = input("Continue job? y/n\n\n")
             if user_input.lower() == "y":
-                self.job_open = True
                 return [STATE_JOB_ACTIVE, ""]
             else:
-                #self.state_end_job()
+
                 return [STATE_CLOSE_JOB, ""]
         else:
             return [STATE_WAIT, ""]
@@ -314,56 +343,60 @@ class timeTracker:
         return [STATE_JOB_ACTIVE, ""]   #return 1 on success
 
     def state_end_job(self):
-        if (self.job_open):
-            db_data = self.load_json_file()
-            self.job_end = self.get_datetime()
-            if (db_data == 0):  # No valid file found -> create file
-                print("no data found, exiting")  # There should at the very least be a valid JSON file, create the file on opening program
-                return STATE_EXIT, ("error: no db")
-                # TODO CREATE FILE?
-            else:  # File found -> look for existing jobs
-                print(f"Ending Current Job {grn}{db_data[self.user]["last_job"]}{dft}")
-                self.datastore = db_data
-                values = re.split(r'[;,. ] ?', self.datastore[self.user]["last_job"])
-                self.client = values[0]
-                self.project = values[1]
-                self.task = values[2]
+        try:
+            if (self.job_open):
+                db_data = self.load_json_file()
+                self.job_end = self.get_datetime()
+                if (db_data == 0):  # No valid file found -> create file
+                    print("no data found, exiting")  # There should at the very least be a valid JSON file, create the file on opening program
+                    return STATE_EXIT, ("error: no db")
+                    # TODO CREATE FILE?
+                else:  # File found -> look for existing jobs
+                    print(f"Ending Current Job {grn}{db_data[self.user]["last_job"]}{dft}")
+                    self.datastore = db_data
+                    values = re.split(r'[;,. ] ?', self.datastore[self.user]["last_job"])
+                    self.client = values[0]
+                    self.project = values[1]
+                    self.task = values[2]
 
-                client_job_start = self.datastore[self.user][self.client]["last_log"]
-                client_new_hours = self.time_difference(client_job_start, self.job_end)
-                client_current_hours = self.datastore[self.user][self.client]["hours_total"]
-                client_hours_since = self.datastore[self.user][self.client]["hours_since"]
-                self.datastore[self.user][self.client]["last_log"] = self.job_end
-                self.datastore[self.user][self.client]["hours_total"] = client_current_hours + client_new_hours
-                self.datastore[self.user][self.client]["hours_since"] = client_hours_since  + client_new_hours
+                    client_job_start = self.datastore[self.user][self.client].get("last_log")
+                    client_new_hours = self.time_difference(client_job_start, self.job_end)
+                    client_current_hours = self.datastore[self.user][self.client].get("hours_total", 0)
+                    client_hours_since = self.datastore[self.user][self.client].get("hours_since", 0)
+                    self.datastore[self.user][self.client]["last_log"] = self.job_end
+                    self.datastore[self.user][self.client]["hours_total"] = client_current_hours + client_new_hours
+                    self.datastore[self.user][self.client]["hours_since"] = client_hours_since  + client_new_hours
 
-                project_job_start = self.datastore[self.user][self.client][self.project]["last_log"]
-                project_new_hours = self.time_difference(project_job_start, self.job_end)
-                project_current_hours = self.datastore[self.user][self.client][self.project]["hours_total"]
-                project_hours_since = self.datastore[self.user][self.client][self.project]["hours_since"]
-                self.datastore[self.user][self.client][self.project]["last_log"] = self.job_end
-                self.datastore[self.user][self.client][self.project]["hours_total"] = project_current_hours + project_new_hours
-                self.datastore[self.user][self.client][self.project]["hours_since"] = project_hours_since + project_new_hours
+                    project_job_start = self.datastore[self.user][self.client][self.project]["last_log"]
+                    project_new_hours = self.time_difference(project_job_start, self.job_end)
+                    project_current_hours = self.datastore[self.user][self.client][self.project].get("hours_total", 0)
+                    project_hours_since = self.datastore[self.user][self.client][self.project].get("hours_since", 0)
+                    self.datastore[self.user][self.client][self.project]["last_log"] = self.job_end
+                    self.datastore[self.user][self.client][self.project]["hours_total"] = project_current_hours + project_new_hours
+                    self.datastore[self.user][self.client][self.project]["hours_since"] = project_hours_since + project_new_hours
 
-                task_job_start = self.datastore[self.user][self.client][self.project][self.task]["last_log"]
-                task_new_hours = self.time_difference(task_job_start, self.job_end)
-                task_current_hours = self.datastore[self.user][self.client][self.project][self.task]["hours_total"]
-                task_hours_since = self.datastore[self.user][self.client][self.project][self.task]["hours_since"]
-                task_hours = task_current_hours + task_new_hours
-                self.datastore[self.user][self.client][self.project][self.task]["last_log"] = self.job_end
-                self.datastore[self.user][self.client][self.project][self.task]["hours_total"] = task_hours
-                self.datastore[self.user][self.client][self.project][self.task]["hours_since"] = task_hours_since + task_new_hours
+                    task_job_start = self.datastore[self.user][self.client][self.project][self.task]["last_log"]
+                    task_new_hours = self.time_difference(task_job_start, self.job_end)
+                    task_current_hours = self.datastore[self.user][self.client][self.project][self.task].get("hours_total", 0)
+                    task_hours_since = self.datastore[self.user][self.client][self.project][self.task].get("hours_since", 0)
+                    task_hours = task_current_hours + task_new_hours
+                    self.datastore[self.user][self.client][self.project][self.task]["last_log"] = self.job_end
+                    self.datastore[self.user][self.client][self.project][self.task]["hours_total"] = task_hours
+                    self.datastore[self.user][self.client][self.project][self.task]["hours_since"] = task_hours_since + task_new_hours
 
-                self.datastore[self.user]["job_open"] = False
-                self.job_open = False
-                self.save_dict_to_json(self.datastore)
-                print(f"""\nClosed Job: {pnk}{self.client}.{blu}{self.project}.{ylw}{self.task}{dft} at {grn}{self.job_end}{dft}""")
-                print(f"Start Time: {grn}{task_job_start}{dft}\n")
-                print(f"You Worked: {mgn}{task_new_hours:.2f}{dft} hours in your last session")
-                print(f"You Worked: {mgn}{task_hours:.2f}{dft} hours total for your current job")
+                    self.datastore[self.user]["job_open"] = False
+                    self.job_open = False
+                    self.save_dict_to_json(self.datastore)
+                    print(f"""\nClosed Job: {pnk}{self.client}.{blu}{self.project}.{ylw}{self.task}{dft} at {grn}{self.job_end}{dft}""")
+                    print(f"Start Time: {grn}{task_job_start}{dft}\n")
+                    print(f"You Worked: {mgn}{task_new_hours:.2f}{dft} hours in your last session")
+                    print(f"You Worked: {mgn}{task_hours:.2f}{dft} hours total for your current job")
+                    return [STATE_WAIT, ""]
+            else:
+                print("No open job found")
                 return [STATE_WAIT, ""]
-        else:
-            print("No open job found")
+        except Exception as e:
+            print(f"Caught Unexpected Exception {e}")
             return [STATE_WAIT, ""]
 
     def state_delete_client(self, client):

@@ -306,7 +306,7 @@ class timeTracker:
                     #self.datastore[self.user][client][.setdefault("hours_total", 0)
                     self.datastore[self.user][client]["first_log"] =  self.task_start
                 else:
-                    return [STATE_EXIT, ""]
+                    return [STATE_WAIT, ""]
             self.datastore[self.user][client]["last_log"] =  self.task_start          # the last log should be entered always as this is where the calculation is done
 
             if project in self.datastore[self.user][client]:
@@ -318,7 +318,7 @@ class timeTracker:
                     #self.datastore[self.user][client][project].setdefault("hours_total", 0)
                     self.datastore[self.user][client][project]["first_log"] = self.task_start
                 else:
-                    return [STATE_EXIT, ""]
+                    return [STATE_WAIT, ""]
             self.datastore[self.user][client][project]["last_log"] = self.task_start
 
             if task in self.datastore[self.user][client][project]:
@@ -331,7 +331,7 @@ class timeTracker:
                     print("CREATING TASK first log")
                     self.datastore[self.user][client][project][task]["first_log"] = self.task_start
                 else:
-                    return [STATE_EXIT, ""]
+                    return [STATE_WAIT, ""]
             self.datastore[self.user][client][project][task]["last_log"] =  self.task_start
             self.datastore[self.user]["last_job"] = (f"{client}.{project}.{task}")
         # Change job open variable

@@ -42,11 +42,12 @@ STATE_WAIT = 1
 STATE_NEW_JOB = 2
 STATE_JOB_ACTIVE = 3
 STATE_CLOSE_JOB = 4
-STATE_REPORT = 5
-STATE_HELP = 6
-STATE_ADD_HOURS = 7
-STATE_LIST_ALL = 8
-STATE_DELETE_CLIENT = 9
+STATE_PROJECT_REPORT = 5
+STATE_CLIENT_REPORT = 6
+STATE_HELP = 7
+STATE_ADD_HOURS = 8
+STATE_LIST_ALL = 9
+STATE_DELETE_CLIENT = 10
 # Global Const
 
 user_stats_names_list =  ["name" , "start", "end", "lunch_start", "lunch_end", "job_open","last_job", "hours_total", "hours_since", "last_report", "first_report", "first_log", "last_log"]
@@ -90,8 +91,10 @@ class timeTracker:
                 self.current_state = self.state_list_cmds()
             elif self.current_state[0] == STATE_ADD_HOURS:
                 self.current_state = self.state_add_hours_task(self.current_state[1])
-            elif self.current_state[0] == STATE_REPORT:
+            elif self.current_state[0] == STATE_PROJECT_REPORT:
                 self.current_state = self.state_report_project(self.current_state[1])
+            elif self.current_state[0] == STATE_CLIENT_REPORT:
+                self.current_state = self.state_report_client(self.current_state[1])
             elif self.current_state[0] == STATE_LIST_ALL:
                 self.current_state = self.state_list_all()
             elif self.current_state[0] == STATE_DELETE_CLIENT:
@@ -158,6 +161,8 @@ class timeTracker:
                     return [STATE_CLOSE_JOB, ""]
                 elif (values[0] == "delete"):
                     return [STATE_DELETE_CLIENT, values[1]]
+                elif (values[0] == "report"):
+                    return [STATE_CLIENT_REPORT, values[1]]
                 else:
                     print(f"Unable to Parse Commands: {values[0]}, {values[1]}")
                     return [STATE_WAIT, ""]
@@ -165,7 +170,7 @@ class timeTracker:
             elif (num_values == 3):
                 if (values[0] == "report"):
                     print("generating report")
-                    return [STATE_REPORT, values]
+                    return [STATE_PROJECT_REPORT, values]
                 else:
                     return [STATE_NEW_JOB, values]
 
@@ -498,9 +503,9 @@ class timeTracker:
         print(f"Generating Report for {client}.{project}")
         db_data = self.load_json_file()
         self.last_report_time = self.get_datetime()
-        project_hours_total = db_data[self.user][client][project]["hours_total"]
-        project_hours_since = db_data[self.user][client][project]["hours_since"]
-        last_report = db_data[self.user][client][project]["last_report"]
+        project_hours_total = db_data[self.user][client][project].get("hours_total", 0)
+        project_hours_since = db_data[self.user][client][project].get("hours_since", 0)
+        last_report = db_data[self.user][client][project].get("last_report")
         db_data[self.user][client][project]["hours_since"] = 0
         db_data[self.user][client][project]["last_report"] = self.last_report_time
         print(f"You Worked: {grn}{project_hours_since:.2f}{dft} since the last report date: {ylw}{last_report}{dft}")
@@ -509,19 +514,34 @@ class timeTracker:
         tasks = {key: value for key, value in db_data[self.user][client][project].items() if isinstance(value, dict)}
         for task in tasks:
             print(task)
-            task_hours_total = db_data[self.user][client][project][task]["hours_total"]
-            task_hours_since = db_data[self.user][client][project][task]["hours_since"]
-            task_last_rpt = db_data[self.user][client][project][task]["last_report"]
+            task_hours_total = db_data[self.user][client][project][task].get("hours_total",0)
+            task_hours_since = db_data[self.user][client][project][task].get("hours_since",0)
+            task_last_rpt = db_data[self.user][client][project][task].get("last_report")
             print(f"You worked: {grn}{task_hours_since:.2f}{dft} since the last report date: {ylw}{task_last_rpt}")
             print(f"A Total of: {pnk}{task_hours_total:.2f}{dft} on this task to date {self.last_report_time} ")
             db_data[self.user][client][project][task]["hours_since"] = 0
             db_data[self.user][client][project][task]["last_report"] = self.last_report_time
+        self.save_dict_to_json(db_data)
         return [STATE_WAIT, ""]
 
 
 
-    def report_client(self, client):
+    def state_report_client(self, client):
         print(f"Generating Report for {client}")
+        db_data = self.load_json_file()
+        self.last_report_time = self.get_datetime()
+        client_hours_total = db_data[self.user][client].get("hours_total", 0)
+        client_hours_since = db_data[self.user][client].get("hours_since",0)
+        last_report =  db_data[self.user][client].get("last_report")
+        db_data[self.user][client]["hours_since"] = 0
+        db_data[self.user][client]["last_report"] = self.last_report_time
+        print(f"You Worked: {grn}{client_hours_since:.2f}{dft} since the last report date: {ylw}{last_report}{dft}")
+        print(f"A Total of: {pnk}{client_hours_total:.2f}{dft} for this client to date {self.last_report_time}")
+        self.save_dict_to_json(db_data)
+        print(f"\n\nThis breaks down to the following projects as:")
+        projects = {key: value for key, value in db_data[self.user][client].items() if isinstance(value, dict)}
+        for project in projects:
+            self.state_report_project([None,client, project])
         return [STATE_WAIT, ""]
 
 

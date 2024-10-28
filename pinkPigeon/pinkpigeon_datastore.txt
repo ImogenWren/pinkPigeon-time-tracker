@@ -6,8 +6,8 @@
         "end": "17:00",
         "lunch_start": "12:30",
         "lunch_end": "13:30",
-        "job_open": false,
-        "last_job": "remotelabs.experiments.daily-test",
+        "job_open": true,
+        "last_job": "dandidrone.wind-tunnel.fw-dev",
         "remotelabs": {
             "hours_total": 24.999999999999996,
             "first_log": "2024-10-07 11:05",
@@ -134,7 +134,7 @@
             "hours_since": 11.516666666666667,
             "last_report": "",
             "first_log": "2024-10-15 10:05",
-            "last_log": "2024-10-22 16:59",
+            "last_log": "2024-10-28 10:15",
             "dandidrone": {
                 "hours_total": 17.76666666666667,
                 "hours_since": 11.516666666666667,
@@ -154,6 +154,20 @@
                     "last_report": "",
                     "first_log": "2024-10-22 15:12",
                     "last_log": "2024-10-22 15:12"
+                }
+            },
+            "wind-tunnel": {
+                "hours_total": 0,
+                "hours_since": 0,
+                "last_report": "",
+                "first_log": "2024-10-28 10:15",
+                "last_log": "2024-10-28 10:15",
+                "fw-dev": {
+                    "hours_total": 0,
+                    "hours_since": 0,
+                    "last_report": "",
+                    "first_log": "2024-10-28 10:15",
+                    "last_log": "2024-10-28 10:15"
                 }
             }
         },

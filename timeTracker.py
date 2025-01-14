@@ -22,6 +22,7 @@ ylw = Fore.LIGHTYELLOW_EX
 blk = Fore.BLACK
 mgn = Fore.LIGHTMAGENTA_EX
 grn = Fore.GREEN
+bold = prettyCLI.pcli["fx"]["bold"]
 #wht = prettyCLI.pcli["fg"]["white"]
 #blu = prettyCLI.pcli["fg"]["cyan"]
 #ylw = prettyCLI.pcli["fg"]["yellow"]
@@ -452,7 +453,7 @@ class timeTracker:
             return [STATE_EXIT, ""]
         else:
             try:
-                print(f"Listing all {pnk}Clients{dft}:")
+                print(f"Listing all {pnk}{bold}Clients{dft}:")
                 for client in db_data[self.user]:
                     if client in user_stats_names_list:    ## Ignore any of the keys that are in the list
                         i = False
@@ -460,9 +461,9 @@ class timeTracker:
                     else:
                         hours_since = db_data[self.user][client].get("hours_since", 0)
                         hours_total = db_data[self.user][client].get("hours_total",0)
-                        print(f"{pnk}{client}________________________________{dft}")
+                        print(f"\n\n{pnk}{client}________________________________{dft}")
                         print(f"{wht}Hours Since Last Report: {grn}{hours_since:.2f}{wht}, Hours Total: {grn}{hours_total:.2f}{dft}")
-                        print(f"{dft}projects:")
+                        print(f"           {blu}{bold}projects:")
                     #print(f"Listing all {blu}projects{wht} for {pnk}{client}{dft}:")
                         for project in db_data[self.user][client]:
                             if project in user_stats_names_list:
@@ -471,9 +472,9 @@ class timeTracker:
                             else:
                                 hours_since = db_data[self.user][client][project].get("hours_since", 0)
                                 hours_total = db_data[self.user][client][project].get("hours_total",0)
-                                print(f"           {blu}{project}{dft}")
+                                print(f"\n{pnk}{client}.{blu}{project}{dft}")
                                 print(f"{wht}           Hours Since Last Report: {grn}{hours_since:.2f}{wht}, Hours Total: {grn}{hours_total:.2f}{dft}")
-                                print(f"{dft}           tasks:")
+                                print(f"{ylw}              {bold}tasks:")
                                 #print(f"Listing all {ylw}tasks{wht} for {blu}{project}{dft}")
                                 for task in db_data[self.user][client][project]:
                                     if task in user_stats_names_list:
@@ -481,7 +482,7 @@ class timeTracker:
                                     else:
                                         hours_since = db_data[self.user][client][project][task].get("hours_since", 0)
                                         hours_total = db_data[self.user][client][project][task].get("hours_total",0)
-                                        print(f"                   {ylw}{task}{dft}")
+                                        print(f"{pnk}{client}.{blu}{project}.{ylw}{task}{dft}")
                                         # line under just makes printout messy
                                         #print(f"{dft}                   Hours Since Last Report: {grn}{hours_since:.2f}{dft}, Hours Total: {grn}{hours_total:.2f}{dft}")
             except Exception as e:

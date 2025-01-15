@@ -6,7 +6,7 @@
         "end": "17:00",
         "lunch_start": "12:30",
         "lunch_end": "13:30",
-        "job_open": true,
+        "job_open": false,
         "last_job": "giulio.soldac.wiring",
         "remotelabs": {
             "hours_total": 65.51666666666668,
@@ -331,23 +331,23 @@
             }
         },
         "giulio": {
-            "hours_total": 33.36666666666667,
-            "hours_since": 33.36666666666667,
+            "hours_total": 36.11666666666667,
+            "hours_since": 36.11666666666667,
             "last_report": "",
             "first_log": "2024-10-31 14:02",
-            "last_log": "2025-01-14 14:07",
+            "last_log": "2025-01-14 16:52",
             "soldac": {
-                "hours_total": 10.950000000000001,
-                "hours_since": 10.950000000000001,
+                "hours_total": 13.700000000000001,
+                "hours_since": 13.700000000000001,
                 "last_report": "",
                 "first_log": "2024-10-31 14:02",
-                "last_log": "2025-01-14 14:07",
+                "last_log": "2025-01-14 16:52",
                 "wiring": {
-                    "hours_total": 8.066666666666666,
-                    "hours_since": 8.066666666666666,
+                    "hours_total": 10.816666666666666,
+                    "hours_since": 10.816666666666666,
                     "last_report": "",
                     "first_log": "2024-10-31 14:02",
-                    "last_log": "2025-01-14 14:07"
+                    "last_log": "2025-01-14 16:52"
                 },
                 "fan-controller": {
                     "hours_total": 2.8833333333333333,

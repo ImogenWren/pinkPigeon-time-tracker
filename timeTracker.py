@@ -22,6 +22,7 @@ ylw = Fore.LIGHTYELLOW_EX
 blk = Fore.BLACK
 mgn = Fore.LIGHTMAGENTA_EX
 grn = Fore.GREEN
+dmgry = Style.DIM + Fore.WHITE
 bold = prettyCLI.pcli["fx"]["bold"]
 #wht = prettyCLI.pcli["fg"]["white"]
 #blu = prettyCLI.pcli["fg"]["cyan"]
@@ -461,7 +462,8 @@ class timeTracker:
                     else:
                         hours_since = db_data[self.user][client].get("hours_since", 0)
                         hours_total = db_data[self.user][client].get("hours_total",0)
-                        print(f"\n\n{pnk}{client}________________________________{dft}")
+                        print(f"\n{dmgry}______________________________________________{dft}")
+                        print(f"{pnk}{client}________________________________{dft}")
                         print(f"{wht}Hours Since Last Report: {grn}{hours_since:.2f}{wht}, Hours Total: {grn}{hours_total:.2f}{dft}")
                         print(f"           {blu}{bold}projects:")
                     #print(f"Listing all {blu}projects{wht} for {pnk}{client}{dft}:")

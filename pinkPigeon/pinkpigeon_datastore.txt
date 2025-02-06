@@ -7,259 +7,7 @@
         "lunch_start": "12:30",
         "lunch_end": "13:30",
         "job_open": false,
-        "last_job": "giulio.soldac.wiring",
-        "remotelabs": {
-            "hours_total": 65.51666666666668,
-            "first_log": "2024-10-07 11:05",
-            "last_log": "2025-01-09 15:18",
-            "stc": {
-                "hours_total": 15.433333333333334,
-                "first_log": "2024-10-07 11:05",
-                "last_log": "2024-11-01 16:55",
-                "fw-dev": {
-                    "hours_total": 8.65,
-                    "first_log": "2024-10-07 11:05",
-                    "last_log": "2024-10-18 12:23",
-                    "hours_since": 0,
-                    "last_report": "2024-10-28 10:51"
-                },
-                "acceptance-testing": {
-                    "hours_total": 2.833333333333333,
-                    "first_log": "2024-10-07 13:44",
-                    "last_log": "2024-10-07 16:41",
-                    "hours_since": 0,
-                    "last_report": "2024-10-28 10:51"
-                },
-                "hours_since": 3.9499999999999997,
-                "last_report": "2024-10-28 10:51",
-                "handover-docs": {
-                    "hours_total": 3.9499999999999997,
-                    "hours_since": 3.9499999999999997,
-                    "last_report": "",
-                    "first_log": "2024-10-31 16:32",
-                    "last_log": "2024-11-01 16:55"
-                }
-            },
-            "meeting": {
-                "hours_total": 3.533333333333333,
-                "hours_since": 1.0833333333333333,
-                "last_report": "2024-10-28 10:51",
-                "first_log": "2024-10-16 10:32",
-                "last_log": "2024-10-30 11:03",
-                "weekly": {
-                    "hours_total": 2.65,
-                    "hours_since": 1.0833333333333333,
-                    "last_report": "2024-10-28 10:51",
-                    "first_log": "2024-10-16 10:32",
-                    "last_log": "2024-10-30 11:03"
-                },
-                "pendulum": {
-                    "hours_total": 0.8833333333333333,
-                    "hours_since": 0,
-                    "last_report": "2024-10-28 10:51",
-                    "first_log": "2024-10-17 10:01",
-                    "last_log": "2024-10-17 10:54"
-                }
-            },
-            "hours_since": 40.51666666666666,
-            "fridge": {
-                "hours_total": 7.066666666666666,
-                "hours_since": 6.716666666666667,
-                "last_report": "2024-10-28 10:51",
-                "first_log": "2024-10-17 14:17",
-                "last_log": "2025-01-09 15:18",
-                "lighting": {
-                    "hours_total": 0.35,
-                    "hours_since": 0,
-                    "last_report": "2024-10-28 10:51",
-                    "first_log": "2024-10-17 14:17",
-                    "last_log": "2024-10-17 14:38"
-                },
-                "fw-dev": {
-                    "hours_total": 0.31666666666666665,
-                    "hours_since": 0.31666666666666665,
-                    "last_report": "",
-                    "first_log": "2024-11-08 16:35",
-                    "last_log": "2024-11-08 16:54"
-                },
-                "re-gas": {
-                    "hours_total": 3.0,
-                    "hours_since": 3.0,
-                    "last_report": "",
-                    "first_log": "2024-11-14 12:01",
-                    "last_log": "2024-11-14 12:01"
-                },
-                "testing": {
-                    "hours_total": 0.7333333333333333,
-                    "hours_since": 0.7333333333333333,
-                    "last_report": "",
-                    "first_log": "2024-11-14 15:30",
-                    "last_log": "2024-11-14 16:14"
-                },
-                "hardware": {
-                    "hours_total": 2.666666666666667,
-                    "hours_since": 2.666666666666667,
-                    "last_report": "",
-                    "first_log": "2025-01-09 13:38",
-                    "last_log": "2025-01-09 15:18"
-                }
-            },
-            "development": {
-                "hours_total": 9.75,
-                "hours_since": 0,
-                "last_report": "2024-10-28 10:51",
-                "first_log": "2024-10-18 11:35",
-                "last_log": "2024-10-22 16:37",
-                "json-messenger": {
-                    "hours_total": 9.75,
-                    "hours_since": 0,
-                    "last_report": "2024-10-28 10:51",
-                    "first_log": "2024-10-18 11:35",
-                    "last_log": "2024-10-22 16:37"
-                }
-            },
-            "supervisor-pcb": {
-                "hours_total": 0.6333333333333333,
-                "hours_since": 0,
-                "last_report": "2024-10-28 10:51",
-                "first_log": "2024-10-21 10:59",
-                "last_log": "2024-10-21 11:37",
-                "hardware-debug": {
-                    "hours_total": 0.6333333333333333,
-                    "hours_since": 0,
-                    "last_report": "2024-10-28 10:51",
-                    "first_log": "2024-10-21 10:59",
-                    "last_log": "2024-10-21 11:37"
-                }
-            },
-            "experiments": {
-                "hours_total": 0.5833333333333333,
-                "hours_since": 0.25,
-                "last_report": "2024-10-28 10:51",
-                "first_log": "2024-10-28 09:51",
-                "last_log": "2024-10-30 09:19",
-                "daily-test": {
-                    "hours_total": 0.5833333333333333,
-                    "hours_since": 0.25,
-                    "last_report": "2024-10-28 10:51",
-                    "first_log": "2024-10-28 09:51",
-                    "last_log": "2024-10-30 09:19"
-                }
-            },
-            "last_report": "2024-10-28 10:51",
-            "pendulums": {
-                "hours_total": 13.833333333333334,
-                "hours_since": 13.833333333333334,
-                "last_report": "",
-                "first_log": "2024-10-30 14:13",
-                "last_log": "2024-11-14 16:58",
-                "pcb-population": {
-                    "hours_total": 7.699999999999999,
-                    "hours_since": 7.699999999999999,
-                    "last_report": "",
-                    "first_log": "2024-10-30 14:13",
-                    "last_log": "2024-11-07 10:24"
-                },
-                "wiring-loom": {
-                    "hours_total": 4.0,
-                    "hours_since": 4.0,
-                    "last_report": "",
-                    "first_log": "2024-11-13 16:56",
-                    "last_log": "2024-11-13 16:56"
-                },
-                "debugging": {
-                    "hours_total": 2.1333333333333333,
-                    "hours_since": 2.1333333333333333,
-                    "last_report": "",
-                    "first_log": "2024-11-14 13:41",
-                    "last_log": "2024-11-14 16:58"
-                }
-            },
-            "dynamics": {
-                "hours_total": 14.683333333333334,
-                "hours_since": 14.683333333333334,
-                "last_report": "",
-                "first_log": "2024-12-02 15:52",
-                "last_log": "2024-12-18 14:17",
-                "fw-dev": {
-                    "hours_total": 14.683333333333334,
-                    "hours_since": 14.683333333333334,
-                    "last_report": "",
-                    "first_log": "2024-12-02 15:52",
-                    "last_log": "2024-12-18 14:17"
-                }
-            }
-        },
-        "dandidrone": {
-            "hours_total": 70.05,
-            "hours_since": 2.5666666666666664,
-            "last_report": "2024-11-28 16:50",
-            "first_log": "2024-10-15 10:05",
-            "last_log": "2024-12-02 12:17",
-            "dandidrone": {
-                "hours_total": 30.966666666666665,
-                "hours_since": 0,
-                "last_report": "2024-11-28 16:50",
-                "first_log": "2024-10-15 10:05",
-                "last_log": "2024-11-15 11:53",
-                "pwm-controller": {
-                    "hours_total": 28.78333333333333,
-                    "hours_since": 0,
-                    "last_report": "2024-11-28 16:50",
-                    "first_log": "2024-10-15 10:05",
-                    "last_log": "2024-11-15 11:53"
-                },
-                "tunnel-maintainance": {
-                    "hours_total": 1.0,
-                    "hours_since": 0,
-                    "last_report": "2024-11-28 16:50",
-                    "first_log": "2024-10-22 15:12",
-                    "last_log": "2024-10-22 15:12"
-                },
-                "meeting": {
-                    "hours_total": 1.1833333333333336,
-                    "hours_since": 0,
-                    "last_report": "2024-11-28 16:50",
-                    "first_log": "2024-11-07 16:01",
-                    "last_log": "2024-11-08 09:12"
-                }
-            },
-            "wind-tunnel": {
-                "hours_total": 39.083333333333336,
-                "hours_since": 2.5666666666666664,
-                "last_report": "2024-11-28 16:50",
-                "first_log": "2024-10-28 10:15",
-                "last_log": "2024-12-02 12:17",
-                "fw-dev": {
-                    "hours_total": 30.333333333333332,
-                    "hours_since": 1.5666666666666667,
-                    "last_report": "2024-11-28 16:50",
-                    "first_log": "2024-10-28 10:15",
-                    "last_log": "2024-11-29 10:54"
-                },
-                "testing": {
-                    "hours_total": 1.0,
-                    "hours_since": 0,
-                    "last_report": "2024-11-28 16:50",
-                    "first_log": "2024-11-19 11:20",
-                    "last_log": "2024-11-19 11:20"
-                },
-                "labview-dev": {
-                    "hours_total": 6.75,
-                    "hours_since": 0,
-                    "last_report": "2024-11-28 16:50",
-                    "first_log": "2024-11-28 09:04",
-                    "last_log": "2024-11-28 16:49"
-                },
-                "hardware-install": {
-                    "hours_total": 1.0,
-                    "hours_since": 1.0,
-                    "last_report": "",
-                    "first_log": "2024-12-02 12:17",
-                    "last_log": "2024-12-02 12:17"
-                }
-            }
-        },
+        "last_job": "remote-labs.dynamics.fw-dev",
         "primary-engineer": {
             "hours_total": 0.65,
             "hours_since": 0.18333333333333332,
@@ -288,27 +36,6 @@
                 }
             }
         },
-        "chem-teaching": {
-            "hours_total": 5.8,
-            "hours_since": 5.8,
-            "last_report": "",
-            "first_log": "2024-10-29 09:27",
-            "last_log": "2024-11-13 13:58",
-            "reverse-osmosis": {
-                "hours_total": 5.8,
-                "hours_since": 5.8,
-                "last_report": "",
-                "first_log": "2024-10-29 09:27",
-                "last_log": "2024-11-13 13:58",
-                "sensor-cal": {
-                    "hours_total": 5.8,
-                    "hours_since": 5.8,
-                    "last_report": "",
-                    "first_log": "2024-10-29 09:27",
-                    "last_log": "2024-11-13 13:58"
-                }
-            }
-        },
         "technically-ed": {
             "hours_total": 0.9666666666666667,
             "hours_since": 0.9666666666666667,
@@ -330,94 +57,52 @@
                 }
             }
         },
-        "giulio": {
-            "hours_total": 42.11666666666667,
-            "hours_since": 42.11666666666667,
-            "last_report": "",
-            "first_log": "2024-10-31 14:02",
-            "last_log": "2025-01-14 16:52",
-            "soldac": {
-                "hours_total": 19.700000000000003,
-                "hours_since": 19.700000000000003,
-                "last_report": "",
-                "first_log": "2024-10-31 14:02",
-                "last_log": "2025-01-14 16:52",
-                "wiring": {
-                    "hours_total": 14.816666666666666,
-                    "hours_since": 14.816666666666666,
-                    "last_report": "",
-                    "first_log": "2024-10-31 14:02",
-                    "last_log": "2025-01-14 16:52"
-                },
-                "fan-controller": {
-                    "hours_total": 4.883333333333333,
-                    "hours_since": 4.883333333333333,
-                    "last_report": "",
-                    "first_log": "2025-01-08 09:05",
-                    "last_log": "2025-01-13 16:54"
-                }
-            },
-            "absorbsion": {
-                "hours_total": 22.416666666666664,
-                "hours_since": 22.416666666666664,
-                "last_report": "",
-                "first_log": "2024-12-12 16:44",
-                "last_log": "2025-01-08 16:58",
-                "labview": {
-                    "hours_total": 22.416666666666664,
-                    "hours_since": 22.416666666666664,
-                    "last_report": "",
-                    "first_log": "2024-12-12 16:44",
-                    "last_log": "2025-01-08 16:58"
-                }
-            }
-        },
-        "ibio-e": {
-            "hours_total": 2.3499999999999996,
-            "hours_since": 2.3499999999999996,
-            "last_report": "",
-            "first_log": "2024-11-01 10:01",
-            "last_log": "2024-11-18 14:46",
-            "imaging-setup": {
-                "hours_total": 2.3499999999999996,
-                "hours_since": 2.3499999999999996,
-                "last_report": "",
-                "first_log": "2024-11-01 10:01",
-                "last_log": "2024-11-18 14:46",
-                "install": {
-                    "hours_total": 2.3499999999999996,
-                    "hours_since": 2.3499999999999996,
-                    "last_report": "",
-                    "first_log": "2024-11-01 10:01",
-                    "last_log": "2024-11-18 14:46"
-                }
-            }
-        },
         "psa-rig": {
             "hours_total": 5.233333333333334,
-            "hours_since": 5.233333333333334,
-            "last_report": "",
+            "hours_since": 0,
+            "last_report": "2025-02-04 14:56",
             "first_log": "2024-11-29 11:42",
             "last_log": "2024-12-03 16:44",
             "pressure-controller": {
                 "hours_total": 5.233333333333334,
-                "hours_since": 5.233333333333334,
-                "last_report": "",
+                "hours_since": 0,
+                "last_report": "2025-02-04 14:56",
                 "first_log": "2024-11-29 11:42",
                 "last_log": "2024-12-03 16:44",
                 "labview-dev": {
                     "hours_total": 2.916666666666667,
-                    "hours_since": 2.916666666666667,
-                    "last_report": "",
+                    "hours_since": 0,
+                    "last_report": "2025-02-04 14:56",
                     "first_log": "2024-11-29 11:42",
                     "last_log": "2024-11-29 16:37"
                 },
                 "hw-install": {
                     "hours_total": 2.316666666666667,
-                    "hours_since": 2.316666666666667,
-                    "last_report": "",
+                    "hours_since": 0,
+                    "last_report": "2025-02-04 14:56",
                     "first_log": "2024-12-03 14:25",
                     "last_log": "2024-12-03 16:44"
+                }
+            }
+        },
+        "remote-labs": {
+            "hours_total": 4.6,
+            "hours_since": 4.6,
+            "last_report": "",
+            "first_log": "2025-02-04 15:00",
+            "last_log": "2025-02-05 16:59",
+            "dynamics": {
+                "hours_total": 4.6,
+                "hours_since": 4.6,
+                "last_report": "",
+                "first_log": "2025-02-04 15:00",
+                "last_log": "2025-02-05 16:59",
+                "fw-dev": {
+                    "hours_total": 4.6,
+                    "hours_since": 4.6,
+                    "last_report": "",
+                    "first_log": "2025-02-04 15:00",
+                    "last_log": "2025-02-05 16:59"
                 }
             }
         }
